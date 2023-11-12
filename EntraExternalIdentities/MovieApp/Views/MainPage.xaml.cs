@@ -1,5 +1,6 @@
 ﻿using MovieApp.Models;
 using MovieApp.MSALClient;
+using System.Security.Claims;
 
 namespace MovieApp.Views
 {
@@ -13,9 +14,11 @@ namespace MovieApp.Views
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
-            var claims = PublicClientSingleton.Instance.MSALClientHelper.AuthResult.ClaimsPrincipal.Claims.Select(c => c.Value);
-            GoToSuccessPage(new User(){Name = "Test" });
+            var token = await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
+            await SecureStorage.SetAsync("token", token);
+            var claims = PublicClientSingleton.Instance.MSALClientHelper.AuthResult.ClaimsPrincipal.Claims;
+            var info = GetInfoFromClaim(claims);
+            GoToSuccessPage(info);
         }
 
         //private void OnLoginSilentClicked(object sender, EventArgs e)
@@ -23,12 +26,24 @@ namespace MovieApp.Views
 
         //}
 
-        private async void GoToSuccessPage(User user)
+        private async void GoToSuccessPage(EntraResponse response)
         {
             await Shell.Current.GoToAsync($"{nameof(BestMoviePage)}", true, new Dictionary<string, object>
             {
-                {"User", user}
+                {"EntraResponse", response}
             });
+        }
+
+        private EntraResponse GetInfoFromClaim(IEnumerable<Claim> claims)
+        {
+
+            var name = claims.First(c => c.Type == "name").Value;
+            var id = claims.First(c => c.Type == "oid").Value;
+            return new EntraResponse()
+            {
+                oid = id,
+                Name = name
+            };
         }
     }
 }

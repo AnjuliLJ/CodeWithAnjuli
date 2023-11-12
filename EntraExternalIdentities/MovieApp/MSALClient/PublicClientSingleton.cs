@@ -49,7 +49,7 @@ namespace MovieApp.MSALClient
         {
             // Load config
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("MovieApp.appsettings.json");
+            using var stream = assembly.GetManifestResourceStream("YOUR_PROJECT_NAME.appsettings.json");
             AppConfiguration = new ConfigurationBuilder()
                 .AddJsonStream(stream)
                 .Build();

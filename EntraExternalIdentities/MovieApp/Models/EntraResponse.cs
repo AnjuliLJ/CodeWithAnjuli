@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieApp.Models
 {
-    public class User
+    public class EntraResponse
     {
-        public int Id { get; set; }
+        public string oid { get; set; }
         public string Name { get; set; }
     }
 }
