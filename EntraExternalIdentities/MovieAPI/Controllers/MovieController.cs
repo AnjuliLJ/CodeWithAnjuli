@@ -10,7 +10,7 @@ namespace MovieAPI.Controllers
     public class MovieController : ControllerBase
     {
         [HttpGet]
-        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Read")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "EntraID:Scopes:Read")]
         public string Get()
         {
             return "Avengers: Endgame";
