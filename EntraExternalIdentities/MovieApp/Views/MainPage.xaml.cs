@@ -1,30 +1,51 @@
-﻿using MovieApp.Models;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Abstractions;
+using MovieApp.Models;
 using MovieApp.MSALClient;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace MovieApp.Views
 {
     public partial class MainPage : ContentPage
     {
+        private readonly EntraIDConfig _entraIDConfig;
 
         public MainPage()
         {
             InitializeComponent();
+            
+            // Load config (normally done in Program.cs or MauiProgram.cs)
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("MovieApp.appsettings.json");
+            IConfiguration appConfiguration = new ConfigurationBuilder()
+                .AddJsonStream(stream)
+                .Build();
+
+            _entraIDConfig = appConfiguration.GetSection("EntraID").Get<EntraIDConfig>();
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            var token = await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
+            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(_entraIDConfig.ClientId)
+                .WithAuthority(_entraIDConfig.Authority)
+                .WithRedirectUri($"msal{_entraIDConfig.ClientId}://auth")
+                .Build();
+
+            AuthenticationResult authResult = await publicClientApplication
+                .AcquireTokenInteractive(_entraIDConfig.ScopesArray)
+                .WithParentActivityOrWindow(App.ParentWindow)
+                .ExecuteAsync();
+
+            var token = authResult.AccessToken;
             await SecureStorage.SetAsync("token", token);
-            var claims = PublicClientSingleton.Instance.MSALClientHelper.AuthResult.ClaimsPrincipal.Claims;
-            var info = GetInfoFromClaim(claims);
+
+            var info = GetInfoFromClaim(authResult.ClaimsPrincipal.Claims);
             GoToSuccessPage(info);
+
         }
 
-        //private void OnLoginSilentClicked(object sender, EventArgs e)
-        //{
-
-        //}
 
         private async void GoToSuccessPage(EntraResponse response)
         {

@@ -13,12 +13,9 @@ namespace MovieApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            // configure platform specific params
-            PlatformConfig.Instance.RedirectUri = $"msal{PublicClientSingleton.Instance.MSALClientHelper.AzureAdConfig.ClientId}://auth";
-            PlatformConfig.Instance.ParentWindow = this;
-
-            // Initialize MSAL and platformConfig is set
-            _ = Task.Run(async () => await PublicClientSingleton.Instance.MSALClientHelper.InitializePublicClientAppAsync()).Result;
+            
+            // Configure platform specific params
+            App.ParentWindow = this;
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
