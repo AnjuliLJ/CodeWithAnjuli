@@ -476,3 +476,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 *appsettings.Development.json
+/EntraExternalIdentities/MovieApp/appsettings.json
