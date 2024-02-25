@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using WebShopAPI.Models;
 
 namespace WebShopAPI.Controllers
@@ -8,6 +9,7 @@ namespace WebShopAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class ProductsController : ControllerBase
     {
         [HttpGet]
