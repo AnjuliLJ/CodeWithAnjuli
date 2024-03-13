@@ -5,9 +5,15 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShopAPI", "WebShopAPI\WebShopAPI.csproj", "{59B55139-905B-4A42-994C-2B0D5F52904B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShopMAUI", "WebShopMAUI\WebShopMAUI.csproj", "{F62B3F04-68E1-4423-9C05-1C40317D0E3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShopMAUI", "WebShopMAUI\WebShopMAUI.csproj", "{F62B3F04-68E1-4423-9C05-1C40317D0E3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShopWeb", "WebShopWeb\WebShopWeb.csproj", "{60DC5A70-E177-47B2-B2D1-06A1311FECAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShopWeb", "WebShopWeb\WebShopWeb.csproj", "{60DC5A70-E177-47B2-B2D1-06A1311FECAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShopBlazor", "WebShopBlazor\WebShopBlazor\WebShopBlazor.csproj", "{A95DD5D1-AAB8-42C8-BE9A-BB7F33A0F37E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShopBlazor.Client", "WebShopBlazor\WebShopBlazor.Client\WebShopBlazor.Client.csproj", "{5C69A65C-5118-4FF9-B2C8-9537D51BFF52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShopBlazorServer", "WebShopBlazorServer\WebShopBlazorServer.csproj", "{E2B70F23-2722-493B-BB9D-6DE24D6A8A01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +35,18 @@ Global
 		{60DC5A70-E177-47B2-B2D1-06A1311FECAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60DC5A70-E177-47B2-B2D1-06A1311FECAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60DC5A70-E177-47B2-B2D1-06A1311FECAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95DD5D1-AAB8-42C8-BE9A-BB7F33A0F37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95DD5D1-AAB8-42C8-BE9A-BB7F33A0F37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95DD5D1-AAB8-42C8-BE9A-BB7F33A0F37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95DD5D1-AAB8-42C8-BE9A-BB7F33A0F37E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C69A65C-5118-4FF9-B2C8-9537D51BFF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C69A65C-5118-4FF9-B2C8-9537D51BFF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C69A65C-5118-4FF9-B2C8-9537D51BFF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C69A65C-5118-4FF9-B2C8-9537D51BFF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2B70F23-2722-493B-BB9D-6DE24D6A8A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2B70F23-2722-493B-BB9D-6DE24D6A8A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2B70F23-2722-493B-BB9D-6DE24D6A8A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2B70F23-2722-493B-BB9D-6DE24D6A8A01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
