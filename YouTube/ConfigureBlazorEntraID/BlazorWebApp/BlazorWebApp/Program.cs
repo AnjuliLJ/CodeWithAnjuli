@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("EntraID"));
-
+builder.Services.AddCascadingAuthenticationState();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +32,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorComponents<App>()
