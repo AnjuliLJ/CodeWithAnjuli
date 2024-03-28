@@ -1,0 +1,22 @@
+﻿<div class="@($"alert alert-{Style.ToString()}")" role="alert">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = @<b>This is a default value</b>;
+    [Parameter]
+    public AlertStyle Style { get; set; }
+
+    public enum AlertStyle
+    {
+        primary,
+        secondary,
+        success,
+        danger,
+        warning,
+        info,
+        light,
+        dark
+    }
+}

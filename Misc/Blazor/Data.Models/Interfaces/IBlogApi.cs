@@ -1,4 +1,4 @@
-﻿using Data.Models.Models;
+﻿using Data.Models;
 
 namespace Data.Models.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿namespace Data.Models.Models;
+﻿namespace Data.Models;
 
 public class Tag
 {
