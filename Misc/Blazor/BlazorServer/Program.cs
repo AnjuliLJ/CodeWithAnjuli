@@ -18,7 +18,7 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>()
         options.CategoriesFolder = "Categories";
     });
 
-builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+builder.Services.AddScoped<IBlogApi, BlogApiDummy>();
 
 var app = builder.Build();
 

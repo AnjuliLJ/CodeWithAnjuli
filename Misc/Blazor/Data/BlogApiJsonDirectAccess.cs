@@ -130,10 +130,18 @@ public class BlogApiJsonDirectAccess : IBlogApi
 
     public async Task<BlogPost?> GetBlogPostAsync(string id)
     {
-        await LoadBlogPostsAsync();
-        if (_blogPosts == null)
-            throw new Exception("Blog posts not found");
-        return _blogPosts.FirstOrDefault(_blogPosts => _blogPosts.Id == id);
+        var category = new Category() { Id = Guid.NewGuid().ToString(), Name = "Blazor" };
+        var tag = new Tag() { Id = Guid.NewGuid().ToString(), Name = "Web Development" };
+        var post = new BlogPost()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Title = "Why Blazor is amazing",
+            PublishDate = DateTime.Now,
+            Category = category,
+            Tags = new List<Tag> { tag }
+        };
+
+        return post;
     }
 
     public async Task<int> GetBlogPostCountAsync()
