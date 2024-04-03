@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BlazorWebAssembly.Shared;
+using BlazorServer.Data;
 
 namespace BlazorWebAssembly.Server.Controllers;
 

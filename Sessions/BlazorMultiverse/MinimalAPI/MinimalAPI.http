@@ -1,0 +1,13 @@
+﻿@MinimalAPI_HostAddress = https://localhost:7139
+
+GET {{MinimalAPI_HostAddress}}/
+
+###
+
+GET {{MinimalAPI_HostAddress}}/api/BlogPostCount
+
+###
+
+GET {{MinimalAPI_HostAddress}}/api/Categories
+
+###

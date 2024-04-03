@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssembly.Server", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssembly.Client", "BlazorWebAssembly\Client\BlazorWebAssembly.Client.csproj", "{A8F3AEE5-77D8-4DA0-8930-E090C0A6B877}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssembly.Shared", "BlazorWebAssembly\Shared\BlazorWebAssembly.Shared.csproj", "{7A1D0B93-20D1-4F66-9BAC-DE86FBF10D5C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{2FFCFCCF-E536-4E07-A420-8FC32E056C1F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Models", "Data.Models\Data.Models.csproj", "{7A76B126-E395-4D79-9FF4-C1C39FC3998E}"
@@ -35,10 +33,6 @@ Global
 		{A8F3AEE5-77D8-4DA0-8930-E090C0A6B877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8F3AEE5-77D8-4DA0-8930-E090C0A6B877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8F3AEE5-77D8-4DA0-8930-E090C0A6B877}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A1D0B93-20D1-4F66-9BAC-DE86FBF10D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A1D0B93-20D1-4F66-9BAC-DE86FBF10D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A1D0B93-20D1-4F66-9BAC-DE86FBF10D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A1D0B93-20D1-4F66-9BAC-DE86FBF10D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FFCFCCF-E536-4E07-A420-8FC32E056C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FFCFCCF-E536-4E07-A420-8FC32E056C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FFCFCCF-E536-4E07-A420-8FC32E056C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
