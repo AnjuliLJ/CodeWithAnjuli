@@ -33,13 +33,6 @@
                 WidthRequest="150"
                 HorizontalOptions="Center" />
 
-            <!--<Button
-                Text="Login (Silent)"
-                Clicked="OnLoginSilentClicked"
-                WidthRequest="150"
-                BackgroundColor="MediumPurple"
-                HorizontalOptions="Center" />-->
-
         </VerticalStackLayout>
     </ScrollView>
 

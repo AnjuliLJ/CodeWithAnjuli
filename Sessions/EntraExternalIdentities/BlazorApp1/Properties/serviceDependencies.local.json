@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "connectionInfo": "App registration: testblazor, Tenant: Movie Apps (testmovieapps.onmicrosoft.com - Microsoft Entra External ID)",
+      "type": "identityapp.default"
+    }
+  }
+}

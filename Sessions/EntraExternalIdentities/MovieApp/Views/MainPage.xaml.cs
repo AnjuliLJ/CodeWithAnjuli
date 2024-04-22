@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Abstractions;
 using MovieApp.Models;
 using MovieApp.MSALClient;
 using System.Reflection;
@@ -15,21 +14,21 @@ namespace MovieApp.Views
         public MainPage()
         {
             InitializeComponent();
-            
-            // Load config (normally done in Program.cs or MauiProgram.cs)
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("MovieApp.appsettings.json");
-            IConfiguration appConfiguration = new ConfigurationBuilder()
-                .AddJsonStream(stream)
-                .Build();
 
-            _entraIDConfig = appConfiguration.GetSection("EntraID").Get<EntraIDConfig>();
+            _entraIDConfig = new EntraIDConfig()
+            {
+                Authority = "https://moviefans.ciamlogin.com/",
+                TenantId = "0d7f6872-c080-48fb-9bc9-04c6da6d127f",
+                ClientId = "89e79508-0d81-4da7-9451-d9e88db4bb1b",
+                Scopes = "openid offline_access api://23c83759-97a0-4d2a-afc1-b675cba810b9/Movie.Read"
+            };
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(_entraIDConfig.ClientId)
-                .WithAuthority(_entraIDConfig.Authority)
+            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder
+                .Create(_entraIDConfig.ClientId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, "common")
                 .WithRedirectUri($"msal{_entraIDConfig.ClientId}://auth")
                 .Build();
 

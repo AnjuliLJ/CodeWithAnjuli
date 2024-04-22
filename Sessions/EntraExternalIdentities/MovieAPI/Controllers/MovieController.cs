@@ -10,10 +10,22 @@ namespace MovieAPI.Controllers
     public class MovieController : ControllerBase
     {
         [HttpGet]
-        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "AzureAD:Scopes:Read")]
+        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "EntraID:Scopes:Read")]
         public string Get()
         {
-            return "Avengers: Endgame";
+            var random = new Random();
+            var randomNumber = random.Next(3);
+            switch (randomNumber)
+            {
+                case 0:
+                    return "Loki";
+                case 1:
+                    return "Avengers: Endgame";
+                case 2:
+                    return "Spider-Man: Far From Home";
+                default:
+                    return "Captain America: The First Avenger";
+            }
         }
 
     }

@@ -5,7 +5,11 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp", "MovieApp\MovieApp.csproj", "{9356A4E6-E39C-40C8-8D57-699044973AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieAPI", "MovieAPI\MovieAPI.csproj", "{2D9E55FD-75C3-4FE3-8576-8DCBDC5CDF46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieAPI", "MovieAPI\MovieAPI.csproj", "{2D9E55FD-75C3-4FE3-8576-8DCBDC5CDF46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMovie", "BlazorMovie\BlazorMovie.csproj", "{719FB46D-FD32-4000-A075-DECFBA70C838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{0DA06E8B-6085-4923-9C32-203558BDF419}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +27,14 @@ Global
 		{2D9E55FD-75C3-4FE3-8576-8DCBDC5CDF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D9E55FD-75C3-4FE3-8576-8DCBDC5CDF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D9E55FD-75C3-4FE3-8576-8DCBDC5CDF46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{719FB46D-FD32-4000-A075-DECFBA70C838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{719FB46D-FD32-4000-A075-DECFBA70C838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{719FB46D-FD32-4000-A075-DECFBA70C838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{719FB46D-FD32-4000-A075-DECFBA70C838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA06E8B-6085-4923-9C32-203558BDF419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA06E8B-6085-4923-9C32-203558BDF419}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA06E8B-6085-4923-9C32-203558BDF419}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA06E8B-6085-4923-9C32-203558BDF419}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -477,3 +477,10 @@ $RECYCLE.BIN/
 *.lnk
 
 *appsettings.Development.json
+EntraExternalIdentities/MovieApp/appsettings.json
+Sessions/EntraExternalIdentities/BlazorApp1/wwwroot/appsettings.json
+Sessions/EntraExternalIdentities/BlazorMovie/wwwroot/appsettings.json
+Sessions/EntraExternalIdentities/MovieAPI/appsettings.json
+Sessions/EntraExternalIdentities/MovieAPI/appsettings.json
+Sessions/EntraExternalIdentities/MovieApp/appsettings.json
+Sessions/EntraExternalIdentities/MovieAPI/appsettings.json
