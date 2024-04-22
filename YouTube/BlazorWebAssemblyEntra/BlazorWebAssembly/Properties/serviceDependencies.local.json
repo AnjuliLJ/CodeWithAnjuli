@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "connectionInfo": "App registration: BlazorWebAssembly, Tenant: Test tenant (testtenant1681563464.onmicrosoft.com - Microsoft Entra External ID)",
+      "type": "identityapp.default"
+    }
+  }
+}

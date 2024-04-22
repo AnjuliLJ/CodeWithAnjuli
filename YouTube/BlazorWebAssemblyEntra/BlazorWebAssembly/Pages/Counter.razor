@@ -1,0 +1,18 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<AuthorizeView Roles="Developer">
+    <Authorized>
+        <p>Hey you're a developer!</p>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Administrator">
+    <Authorized>
+        <p>Hey you're an administrator!</p>
+    </Authorized>
+</AuthorizeView>
+@code {
+
+}
