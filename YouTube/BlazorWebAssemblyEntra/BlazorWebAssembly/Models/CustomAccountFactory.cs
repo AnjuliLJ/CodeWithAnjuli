@@ -17,7 +17,7 @@ namespace BlazorWebAssembly.Models
             {
                 var userIdentity = initialUser.Identity as ClaimsIdentity;
 
-                if (userIdentity is not null)
+                if (userIdentity is not null && account.Roles is not null)
                 {
                     account?.Roles.ForEach((role) =>
                     {

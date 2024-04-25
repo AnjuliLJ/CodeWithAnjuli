@@ -1,18 +1,40 @@
 ﻿@page "/counter"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject HttpClient http
+@inject IAccessTokenProvider AuthorizationService
 
 <PageTitle>Counter</PageTitle>
 
-<AuthorizeView Roles="Developer">
+<AuthorizeView>
     <Authorized>
-        <p>Hey you're a developer!</p>
+        <p>Best movie is:</p>
+        <h3>@name</h3>
+        <button @onclick="GetName">Get Name</button>
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Administrator">
-    <Authorized>
-        <p>Hey you're an administrator!</p>
-    </Authorized>
-</AuthorizeView>
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
 
+    string name = "?";
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        http.DefaultRequestHeaders.Add("Access-Control-Allow-Origin", "*");
+    }
+
+    private async Task GetName()
+    {
+        name = "Loading...";
+
+        var state = await AuthenticationState;
+        var accessTokenResult = await AuthorizationService.RequestAccessToken();
+
+        accessTokenResult.TryGetToken(out var token);
+
+        http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Value);
+        var response = await http.GetAsync("api/movie");
+        name = await response.Content.ReadAsStringAsync();
+    }
 }
