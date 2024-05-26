@@ -1,0 +1,27 @@
+﻿@page "/"
+@using Microsoft.JSInterop
+@inject IJSRuntime jsRuntime
+@implements IDisposable
+
+<button @onclick="OnBtnClicked">Click me</button>
+<div id="map" style="width: 200px; height: 200px;"></div>
+
+@code {
+    private IJSObjectReference jsModule;
+    private DotNetObjectReference<MessageBuilder> objectReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        objectReference = DotNetObjectReference.Create(new MessageBuilder("Hello from .NET again"));
+        jsModule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/Home.razor.js");
+        await jsModule.InvokeVoidAsync("loadMap", "map");
+    }
+
+    private async void OnBtnClicked(){
+        // await jsModule.InvokeVoidAsync("showMessage", "Hi!");
+        await jsModule.InvokeVoidAsync("testJStoNet", objectReference);
+    }
+
+    public void Dispose(){
+        objectReference?.Dispose();
+    }
+}
