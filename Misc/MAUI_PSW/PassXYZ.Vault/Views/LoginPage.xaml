@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PassXYZ.Vault.Views.LoginPage"
+             xmlns:resources="clr-namespace:PassXYZ.Vault.Properties"
+             Title="LoginPage">
+    <ScrollView>
+        <StackLayout Margin="20">
+            <Grid Padding="10">
+                <StackLayout Padding="10">
+                    <Label HorizontalOptions="Center"
+                           Text="{x:Static resources:Resources.AppName}"
+                           FontAttributes="Bold" FontSize="22"/>
+
+                    <Label x:Name="AppVersion"
+                           HorizontalOptions="Center"
+                           FontSize="Small"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
