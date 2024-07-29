@@ -9,19 +9,19 @@
             Spacing="25">
             <Label
                 Text="Welcome to my recipe app!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+                Style="{StaticResource Headline}" />
 
             <Label
                 Text="See how cool Entra ID is:"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                Style="{StaticResource SubHeadline}"/>
 
             <Button
                 x:Name="LoginBtn"
                 Text="Login" 
                 Clicked="OnLoginClicked"/>
+
+            <Label x:Name="NameLabel"/>
+
         </VerticalStackLayout>
     </ScrollView>
 
