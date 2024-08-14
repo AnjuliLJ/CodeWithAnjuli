@@ -23,8 +23,17 @@ namespace RecipesApp
             try
             {
                 var accounts = await publicClientApplicationBuilder.GetAccountsAsync();
-                await publicClientApplicationBuilder.AcquireTokenSilent(EntraConfig.Scopes, accounts.First())
+                if (accounts.Any())
+                {
+                     await publicClientApplicationBuilder.AcquireTokenSilent(EntraConfig.Scopes, accounts.First())
                     .ExecuteAsync();
+                } else
+                {
+                    var authResult = await publicClientApplicationBuilder.AcquireTokenInteractive(EntraConfig.Scopes)
+                   .WithParentActivityOrWindow(EntraConfig.ParentWindow)
+                   .ExecuteAsync().ConfigureAwait(false);
+                }
+
             }
             catch (MsalException ex)
             {
