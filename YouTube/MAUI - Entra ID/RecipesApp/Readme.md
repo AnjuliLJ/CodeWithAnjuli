@@ -10,17 +10,6 @@ In the Microsoft Entra admin center, you need the following information:
 ## General setup
 Open the EntraConfig.cs class and change the TENANT text in the Authority property to your tenant's name. Next, replace the CLIENT_ID with the Application (Client) ID that is linked to your registration in Microsoft Entra ID. If necessary, also add/change the Scopes and IOSKeychainSecurityGroup.
 
-`
- public static class EntraConfig
- {
-     public static string Authority = "https://TENANT.ciamlogin.com/";
-     public static string ClientId = "CLIENT_ID";
-     public static string[] Scopes = { "openid", "offline_access" };
-     public static string IOSKeychainSecurityGroup = "com.microsoft.adalcache";
-     public static object? ParentWindow { get; set; }
- }
-`
-
 ## Android-specific setup
 Open the MsalActivity.cs class, which you can find in the Platforms/Android folder. Here you have to replace the CLIENT_ID part with the Application (Client) ID you fetched from the Microsoft Entra admin center. 
 
