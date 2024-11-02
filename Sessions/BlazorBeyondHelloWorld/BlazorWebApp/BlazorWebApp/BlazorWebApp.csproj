@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorWebApp.Client\BlazorWebApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="3.3.0" />
   </ItemGroup>
 
 </Project>

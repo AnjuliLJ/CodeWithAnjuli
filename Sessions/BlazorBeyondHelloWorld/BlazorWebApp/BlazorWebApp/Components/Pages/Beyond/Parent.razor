@@ -1,0 +1,12 @@
+﻿@page "/Parent"
+@rendermode InteractiveServer
+
+<h3>This is a parent component</h3>
+
+<p>Current count: @count</p>
+
+<Child CurrentCount="count" />
+
+@code {
+    int count = 4;
+}

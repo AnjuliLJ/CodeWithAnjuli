@@ -1,0 +1,40 @@
+﻿@page "/forms"
+
+<h3>Forms Example</h3>
+
+<EditForm Model="blogPost" OnValidSubmit="ValidSubmit">
+    <DataAnnotationsValidator />
+
+    <ValidationSummary />
+    <div>
+        <label>Title:</label><br/>
+        <InputText @bind-Value="blogPost.Title" />
+    </div>
+
+    <div>
+        <label>Description:</label><br />
+        <ValidationMessage For="@(() => blogPost.Description)" />
+        <InputText @bind-Value="blogPost.Description" />
+    </div>
+
+    <div>
+        <label>Text: </label><br />
+        <InputTextArea @bind-Value="blogPost.Text" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+
+</EditForm>
+
+<br />
+<p>Your blog post: @blogPost.Title</p>
+
+
+@code {
+    private BlogPost blogPost { get; set; } = new();
+
+    private Task ValidSubmit()
+    {
+        return Task.CompletedTask;
+    }
+}

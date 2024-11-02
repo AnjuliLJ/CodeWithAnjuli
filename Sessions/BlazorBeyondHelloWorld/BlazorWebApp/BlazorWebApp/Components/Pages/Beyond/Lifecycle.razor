@@ -1,0 +1,43 @@
+﻿<h3>Component Lifecycle events</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Runs only once
+        base.OnInitialized();
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        // Runs after OnInitialized, and every parameter change
+        base.OnParametersSet();
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // After the whole component is rendered
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override bool ShouldRender()
+    {
+        // Is called when a component is re-rendered
+        return base.ShouldRender();
+    }
+
+}

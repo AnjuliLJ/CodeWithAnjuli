@@ -1,0 +1,18 @@
+﻿@rendermode InteractiveServer
+
+<h4>This is a child component</h4>
+
+<p>Current count = @CurrentCount</p>
+
+
+<button @onclick="IncrementCount">Click</button>
+
+@code {
+    [Parameter]
+    public int CurrentCount { get; set; }
+
+    private void IncrementCount()
+    {
+        CurrentCount++;
+    }
+}
