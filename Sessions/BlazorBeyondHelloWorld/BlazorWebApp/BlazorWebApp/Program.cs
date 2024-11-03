@@ -1,6 +1,9 @@
-using BlazorWebApp.Client.Pages;
+using BlazorWebApp;
 using BlazorWebApp.Components;
 using BlazorWebApp.Services;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
