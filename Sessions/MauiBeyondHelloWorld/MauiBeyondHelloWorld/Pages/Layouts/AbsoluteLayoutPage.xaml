@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBeyondHelloWorld.Pages.Layouts.AbsoluteLayoutPage"
+             Title="AbsoluteLayoutPage">
+    <AbsoluteLayout BackgroundColor="LightGray">
+        <BoxView Color="Green"
+                 AbsoluteLayout.LayoutBounds="0.5, 0.5, 150, 150"
+                 AbsoluteLayout.LayoutFlags="PositionProportional" />
+        <BoxView Color="Blue"
+                 AbsoluteLayout.LayoutBounds="0.9, 0.9, 200, 200"
+                 AbsoluteLayout.LayoutFlags="PositionProportional" />
+    </AbsoluteLayout>
+</ContentPage>
