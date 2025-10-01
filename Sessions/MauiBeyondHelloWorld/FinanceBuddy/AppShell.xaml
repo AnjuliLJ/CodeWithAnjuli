@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FinanceBuddy.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:expenses="clr-namespace:FinanceBuddy.Expenses"
+    xmlns:charts="clr-namespace:FinanceBuddy.Charts"
+    xmlns:settings="clr-namespace:FinanceBuddy.Settings"
+    xmlns:resources="clr-namespace:FinanceBuddy.Resources"
+    Title="FinanceBuddy">
+
+    <TabBar>
+        <ShellContent
+            Title="Expenses"
+            Icon="{FontImage FontFamily=MaterialSymbolsOutlined, Color={StaticResource Primary}, Glyph={x:Static resources:Icons.List}}"
+            ContentTemplate="{DataTemplate expenses:ExpensesPage}"
+            Route="ExpensesPage" />
+        
+        <ShellContent
+            Title="Charts"
+            Icon="{FontImage FontFamily=MaterialSymbolsOutlined, Color={StaticResource Primary}, Glyph={x:Static resources:Icons.Chart}}"
+            ContentTemplate="{DataTemplate charts:ChartsPage}"
+            Route="ChartsPage" />
+        
+        <ShellContent
+            Title="Settings"
+            Icon="{FontImage FontFamily=MaterialSymbolsOutlined, Color={StaticResource Primary}, Glyph={x:Static resources:Icons.Settings}}"
+            ContentTemplate="{DataTemplate settings:SettingsPage}"
+            Route="SettingsPage" />
+    </TabBar>
+
+</Shell>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceBuddy.Expenses.ExpenseDetailsPage"
+             xmlns:viewmodel="clr-namespace:FinanceBuddy.Expenses"
+             xmlns:resources="clr-namespace:FinanceBuddy.Resources"
+             x:DataType="viewmodel:ExpenseDetailsViewModel"
+             Title="Expense Details"
+             BackgroundColor="#F5F5F5">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16"> 
+            <!-- Expense Details Card -->
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="8" Offset="0,2" />
+                </Border.Shadow>
+                
+                <VerticalStackLayout Spacing="24">
+                    
+                    <!-- Category Icon and Name -->
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <Border BackgroundColor="{Binding Expense.Category.IconColor}"
+                                WidthRequest="80"
+                                HeightRequest="80"
+                                StrokeThickness="0"
+                                HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="40" />
+                            </Border.StrokeShape>
+                            
+                            <Label Text="{Binding Expense.Category.Icon}"
+                                   FontFamily="MaterialSymbolsOutlined"
+                                   FontSize="40"
+                                   TextColor="#1C1B1F"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        
+                        <Label Text="{Binding Expense.Category.Name}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#333333"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    
+                    <!-- Amount -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Amount"
+                               FontSize="14"
+                               TextColor="#666666" />
+                        <Label FontSize="32"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="€" />
+                                    <Span Text="{Binding Expense.Amount, StringFormat='{0:N2}'}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                    
+                    <!-- Expense Name -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Expense Name"
+                               FontSize="14"
+                               TextColor="#666666" />
+                        <Label Text="{Binding Expense.Name}"
+                               FontSize="18"
+                               TextColor="#333333" />
+                    </VerticalStackLayout>
+                    
+                    <!-- Store -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Store"
+                               FontSize="14"
+                               TextColor="#666666" />
+                        <Label Text="{Binding Expense.Store}"
+                               FontSize="18"
+                               TextColor="#333333" />
+                    </VerticalStackLayout>
+                    
+                    <!-- Date -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Date"
+                               FontSize="14"
+                               TextColor="#666666" />
+                        <Label Text="{Binding Expense.Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                               FontSize="18"
+                               TextColor="#333333" />
+                    </VerticalStackLayout>
+                    
+                </VerticalStackLayout>
+            </Border>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

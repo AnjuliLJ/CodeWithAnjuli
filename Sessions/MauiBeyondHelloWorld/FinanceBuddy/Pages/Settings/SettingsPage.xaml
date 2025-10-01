@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FinanceBuddy.Settings"
+             xmlns:resources="clr-namespace:FinanceBuddy.Resources"
+             x:Class="FinanceBuddy.Settings.SettingsPage"
+             x:DataType="local:SettingsViewModel"
+             Title="Settings"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <!-- Keep me logged in -->
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Keep me logged in"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label Text="Stay signed in for faster access"
+                               FontSize="14"
+                               TextColor="#666666" />
+                    </VerticalStackLayout>
+
+                    <Switch Grid.Column="1"
+                            IsToggled="{Binding KeepMeLoggedIn}"
+                            OnColor="#5B9BED"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- First day of the week -->
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="First day of the week"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label Text="Choose your week start day"
+                               FontSize="14"
+                               TextColor="#666666" />
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="#E0F2FE"
+                            StrokeThickness="0"
+                            Padding="12,8"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Picker ItemsSource="{Binding DaysOfWeek}"
+                                SelectedItem="{Binding SelectedFirstDayOfWeek}"
+                                TextColor="#333333"
+                                FontSize="14"
+                                WidthRequest="120"
+                                HorizontalOptions="End" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Categories -->
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToCategoriesCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Categories"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label Text="Manage expense categories"
+                               FontSize="14"
+                               TextColor="#666666" />
+                    </VerticalStackLayout>
+
+                    <Label Grid.Column="1"
+                           Text="{x:Static resources:Icons.ChevronRight}"
+                           FontFamily="MaterialSymbolsOutlined"
+                           FontSize="24"
+                           TextColor="#666666"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- App Information Footer -->
+            <VerticalStackLayout Spacing="4" Margin="0,40,0,20">
+                <Label Text="FinanceBuddy"
+                       FontSize="16"
+                       TextColor="#666666"
+                       HorizontalOptions="Center" />
+                <Label Text="Version 1.2.0"
+                       FontSize="14"
+                       TextColor="#999999"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

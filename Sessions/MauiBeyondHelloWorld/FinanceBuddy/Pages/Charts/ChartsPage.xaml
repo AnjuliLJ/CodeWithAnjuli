@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:FinanceBuddy.Charts"
+             xmlns:models="clr-namespace:FinanceBuddy.Models"
+             xmlns:resources="clr-namespace:FinanceBuddy.Resources"
+             xmlns:converters="clr-namespace:FinanceBuddy.Converters"
+             x:Class="FinanceBuddy.Charts.ChartsPage"
+             x:DataType="local:ChartsViewModel"
+             Title="Chart"
+             BackgroundColor="#F5F5F5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PeriodButtonColorConverter x:Key="PeriodButtonColorConverter" />
+            <converters:PeriodButtonTextColorConverter x:Key="PeriodButtonTextColorConverter" />
+            <converters:BoolToStrokeThicknessConverter x:Key="BoolToStrokeThicknessConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Period type buttons -->
+            <RowDefinition Height="Auto" />
+            <!-- Navigation controls -->
+            <RowDefinition Height="300" />
+            <!-- Chart -->
+            <RowDefinition Height="Auto" />
+            <!-- Categories header with remove button -->
+            <RowDefinition Height="Auto" />
+            <!-- Categories list - Auto to expand naturally -->
+        </Grid.RowDefinitions>
+
+        <!-- Period Type Buttons -->
+        <Border Grid.Row="0"
+                BackgroundColor="#E0F2FE"
+                StrokeThickness="0"
+                Padding="4">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Week Button -->
+                <Border Grid.Column="0"
+                        BackgroundColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonColorConverter}, ConverterParameter=Week}"
+                        StrokeThickness="0"
+                        Padding="24,12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectWeekCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Week"
+                           TextColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonTextColorConverter}, ConverterParameter=Week}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Month Button -->
+                <Border Grid.Column="1"
+                        BackgroundColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonColorConverter}, ConverterParameter=Month}"
+                        StrokeThickness="0"
+                        Padding="24,12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectMonthCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Month"
+                           TextColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonTextColorConverter}, ConverterParameter=Month}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Year Button -->
+                <Border Grid.Column="2"
+                        BackgroundColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonColorConverter}, ConverterParameter=Year}"
+                        StrokeThickness="0"
+                        Padding="24,12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectYearCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Year"
+                           TextColor="{Binding SelectedPeriodType, Converter={StaticResource PeriodButtonTextColorConverter}, ConverterParameter=Year}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Navigation Controls -->
+        <Grid Grid.Row="1" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Chevron -->
+            <Border Grid.Column="0"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigatePreviousCommand}" />
+                </Border.GestureRecognizers>
+                <Label Text="{x:Static resources:Icons.ChevronLeft}"
+                       FontFamily="MaterialSymbolsOutlined"
+                       FontSize="32"
+                       TextColor="#666666"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Period Label -->
+            <Label Grid.Column="1"
+                   Text="{Binding CurrentPeriodLabel}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#333333"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+
+            <!-- Right Chevron -->
+            <Border Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateNextCommand}" />
+                </Border.GestureRecognizers>
+                <Label Text="{x:Static resources:Icons.ChevronRight}"
+                       FontFamily="MaterialSymbolsOutlined"
+                       FontSize="32"
+                       TextColor="#666666"
+                       VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <!-- Syncfusion Chart -->
+        <Border Grid.Row="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="16">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <chart:SfCartesianChart>
+                <chart:SfCartesianChart.XAxes>
+                    <chart:CategoryAxis ShowMajorGridLines="False" />
+                </chart:SfCartesianChart.XAxes>
+                <chart:SfCartesianChart.YAxes>
+                    <chart:NumericalAxis ShowMajorGridLines="True" />
+                </chart:SfCartesianChart.YAxes>
+                <chart:ColumnSeries ItemsSource="{Binding ChartData}"
+                                    XBindingPath="Label"
+                                    YBindingPath="Amount"
+                                    Fill="#5B9BED"
+                                    Spacing="0.2"
+                                    ShowDataLabels="True">
+                    <chart:ColumnSeries.DataLabelSettings>
+                        <chart:CartesianDataLabelSettings LabelPlacement="Inner"
+                                                          UseSeriesPalette="False">
+                            <chart:CartesianDataLabelSettings.LabelStyle>
+                                <chart:ChartDataLabelStyle TextColor="White" 
+                                                          FontSize="11"
+                                                          FontAttributes="Bold"
+                                                          LabelFormat="€#,##0" />
+                            </chart:CartesianDataLabelSettings.LabelStyle>
+                        </chart:CartesianDataLabelSettings>
+                    </chart:ColumnSeries.DataLabelSettings>
+                </chart:ColumnSeries>
+            </chart:SfCartesianChart>
+        </Border>
+
+        <!-- Categories Header with Remove Selection Button -->
+        <Grid Grid.Row="3" Margin="0,8,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Text="Categories"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#333333"
+                   VerticalOptions="Center" />
+
+            <Button Grid.Column="1"
+                    Text="✕ Remove selection"
+                    Command="{Binding RemoveSelectionCommand}"
+                    IsVisible="{Binding IsAnyCategorySelected}"
+                    BackgroundColor="Transparent"
+                    TextColor="#666666"
+                    FontSize="12"
+                    Padding="8,4"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+        </Grid>
+
+        <!-- Categories List -->
+        <CollectionView Grid.Row="4"
+                        ItemsSource="{Binding CategorySummaries}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:CategorySummary">
+                    <Border BackgroundColor="White"
+                            StrokeThickness="{Binding IsSelected, Converter={StaticResource BoolToStrokeThicknessConverter}}"
+                            Stroke="#5B9BED"
+                            Margin="0,0,0,12"
+                            Padding="16">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ChartsViewModel}}, Path=SelectCategoryCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Category Icon -->
+                            <Border Grid.Column="0"
+                                    BackgroundColor="{Binding Category.IconColor}"
+                                    WidthRequest="48"
+                                    HeightRequest="48"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Category.Icon}"
+                                       FontFamily="MaterialSymbolsOutlined"
+                                       FontSize="24"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <!-- Category Name -->
+                            <Label Grid.Column="1"
+                                   Text="{Binding Category.Name}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333333"
+                                   VerticalOptions="Center" />
+
+                            <!-- Total Amount -->
+                            <Label Grid.Column="2"
+                                   Text="{Binding TotalAmount, StringFormat='€{0:F2}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333333"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+    </ScrollView>
+</ContentPage>

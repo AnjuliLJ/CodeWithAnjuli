@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiBeyondHelloWorld", "MauiBeyondHelloWorld\MauiBeyondHelloWorld.csproj", "{C358B6D2-B827-4E3E-B360-2703B2959C88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceBuddy", "FinanceBuddy\FinanceBuddy.csproj", "{026710B8-D000-4519-A640-406A30129B38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F6F462E1-D058-33EE-9A35-BBD49B846676}"
+	ProjectSection(SolutionItems) = preProject
+		.github\Task.md = .github\Task.md
+		.github\implementation.md = .github\implementation.md
+		.github\instructions.prompt.md = .github\instructions.prompt.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +22,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|x64.Build.0 = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Debug|x86.Build.0 = Debug|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|x64.ActiveCfg = Release|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|x64.Build.0 = Release|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|x86.ActiveCfg = Release|Any CPU
-		{C358B6D2-B827-4E3E-B360-2703B2959C88}.Release|x86.Build.0 = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|x64.Build.0 = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Debug|x86.Build.0 = Debug|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|x64.ActiveCfg = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|x64.Build.0 = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|x86.ActiveCfg = Release|Any CPU
+		{026710B8-D000-4519-A640-406A30129B38}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
