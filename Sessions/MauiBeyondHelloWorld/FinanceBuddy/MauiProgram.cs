@@ -4,6 +4,7 @@ using FinanceBuddy.Charts;
 using FinanceBuddy.Settings;
 using FinanceBuddy.Categories;
 using FinanceBuddy.Services;
+using FinanceBuddy.Controls;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace FinanceBuddy;
@@ -25,6 +26,11 @@ public static class MauiProgram
 				fonts.AddFont("MaterialSymbolsOutlined.ttf", "MaterialSymbolsOutlined");
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+			})
+			.ConfigureMauiHandlers(handlers =>
+			{
+				// Register custom control handler
+				handlers.AddHandler<AnimatedButton, AnimatedButtonHandler>();
 			});
 
 		// Register Services

@@ -4,6 +4,7 @@
              x:Class="FinanceBuddy.Expenses.ExpenseDetailsPage"
              xmlns:viewmodel="clr-namespace:FinanceBuddy.Expenses"
              xmlns:resources="clr-namespace:FinanceBuddy.Resources"
+             xmlns:controls="clr-namespace:FinanceBuddy.Controls"
              x:DataType="viewmodel:ExpenseDetailsViewModel"
              Title="Expense Details"
              BackgroundColor="#F5F5F5">
@@ -96,6 +97,33 @@
                                TextColor="#333333" />
                     </VerticalStackLayout>
                     
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- Demo: Custom AnimatedButton Control -->
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Custom Component Demo"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                    <Label Text="This AnimatedButton is a custom control with platform-specific handlers (Android, iOS, Mac Catalyst)"
+                           FontSize="12"
+                           TextColor="#666666"
+                           LineBreakMode="WordWrap" />
+                    
+                    <!-- Custom AnimatedButton with platform-specific animations -->
+                    <controls:AnimatedButton Text="Try Custom Button"
+                                            BackgroundColor="#5B9BED"
+                                            TextColor="White"
+                                            CornerRadius="12"
+                                            HeightRequest="48"/>
                 </VerticalStackLayout>
             </Border>
             

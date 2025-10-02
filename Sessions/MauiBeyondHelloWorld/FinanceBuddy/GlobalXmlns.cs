@@ -7,3 +7,4 @@
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "FinanceBuddy.Models")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "FinanceBuddy.Services")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "FinanceBuddy.Converters")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "FinanceBuddy.Controls")]
