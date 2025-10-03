@@ -31,6 +31,7 @@ public static class MauiProgram
 			{
 				// Register custom control handler
 				handlers.AddHandler<AnimatedButton, AnimatedButtonHandler>();
+
 			});
 
 		// Register Services

@@ -54,7 +54,6 @@ public class AnimatedButton : View
 		set => SetValue(CommandProperty, value);
 	}
 
-	// Event for handling clicks
 	public event EventHandler? Clicked;
 
 	public void SendClicked()

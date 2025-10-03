@@ -47,6 +47,7 @@ public partial class ExpensesViewModel : ObservableObject
 		{
 			{ "Expense", expense }
 		};
+
 		await Shell.Current.GoToAsync("ExpenseDetailsPage", navigationParameter);
 	}
 }
