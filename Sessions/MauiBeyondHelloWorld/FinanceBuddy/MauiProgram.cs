@@ -13,9 +13,6 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		// Register Syncfusion license (Community license - free for individual developers and small businesses)
-		// Register your license at: https://www.syncfusion.com/account/manage-trials/downloads
-		Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjGyl/Vkd+XU9FcVRDXXxKf0x0RWFcb1l6d1JMYFxBNQtUQF1hTH9TdkRjXnxWc3RTRGRaWkd3");
 
 		var builder = MauiApp.CreateBuilder();
 		builder
@@ -26,12 +23,6 @@ public static class MauiProgram
 				fonts.AddFont("MaterialSymbolsOutlined.ttf", "MaterialSymbolsOutlined");
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			})
-			.ConfigureMauiHandlers(handlers =>
-			{
-				// Register custom control handler
-				handlers.AddHandler<AnimatedButton, AnimatedButtonHandler>();
-
 			});
 
 		// Register Services
@@ -40,6 +31,7 @@ public static class MauiProgram
 		// Register ViewModels
 		builder.Services.AddTransient<ExpensesViewModel>();
 		builder.Services.AddTransient<ExpenseDetailsViewModel>();
+		builder.Services.AddTransient<AddExpenseViewModel>();
 		builder.Services.AddTransient<ChartsViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
 		builder.Services.AddTransient<CategoriesViewModel>();
@@ -47,6 +39,7 @@ public static class MauiProgram
 		// Register Pages
 		builder.Services.AddTransient<ExpensesPage>();
 		builder.Services.AddTransient<ExpenseDetailsPage>();
+		builder.Services.AddTransient<AddExpensePage>();
 		builder.Services.AddTransient<ChartsPage>();
 		builder.Services.AddTransient<SettingsPage>();
 		builder.Services.AddTransient<CategoriesPage>();

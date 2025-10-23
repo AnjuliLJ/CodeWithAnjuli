@@ -1,235 +1,313 @@
-# Implementation Plan: Settings Page Feature
+# Implementation Plan: Add Expense Feature
 
 ## Overview
-Implement a Settings page with three main settings: Keep me logged in (toggle switch), First day of the week (picker), and Manage categories (navigation button). The design should match the provided screenshot with clean, card-based UI.
+This plan implements an "Add Expense" feature with a focus on showcasing .NET MAUI triggers and behaviors for animations and validation. The implementation follows MVVM patterns and existing architectural conventions in the project.
 
-## Prerequisites
-- Existing SettingsPage and SettingsViewModel
-- Icons.cs for chevron icon
-- Material Symbols font already configured
+## Context Analysis
+- **Existing Patterns**: MVVM with CommunityToolkit.Mvvm, dependency injection, Shell navigation
+- **Service Layer**: ExpenseService provides category data and will need an `AddExpense` method
+- **Navigation**: Shell-based navigation using `GoToAsync`
+- **UI Style**: Material Design 3 with rounded borders, shadows, and card-based layouts
+- **Icons**: MaterialSymbolsOutlined font, defined in Resources/Icons.cs
 
-## Implementation Tasks
+## Implementation Steps
 
-### TODO 1: Add Chevron Right Icon (if not already exists)
-**Goal**: Ensure chevron_right icon is available for the Categories navigation arrow
+### TODO 1: Update ExpenseService to support adding expenses
+**File**: `FinanceBuddy/Services/ExpenseService.cs`
 
-**Steps**:
-1. Check if `ChevronRight` icon exists in `Resources/Icons.cs`
-2. If not, add it: `\ue5cc`
+**Changes needed**:
+- Add a private `List<Expense>` field to store user-added expenses
+- Create `AddExpense(Expense expense)` method to add new expenses to the list
+- Modify `GetExpensesByMonth()` to include user-added expenses along with generated ones
+- Ensure user expenses are persisted in the list (for this demo, in-memory is sufficient)
 
-**Files to modify**:
-- `Resources/Icons.cs` (if needed)
-
-**Validation**:
-- Icon compiles without errors
-- Icon is accessible from XAML
+**Rationale**: The service needs to support adding expenses, not just generating random ones.
 
 ---
 
-### TODO 2: Implement SettingsViewModel Properties
-**Goal**: Add observable properties for the settings values
+### TODO 2: Add Plus icon to Icons.cs
+**File**: `FinanceBuddy/Resources/Icons.cs`
 
-**Steps**:
-1. Add `[ObservableProperty]` for:
-   - `bool keepMeLoggedIn` (default: false)
-   - `string selectedFirstDayOfWeek` (default: "Monday")
-   - `List<string> daysOfWeek` - list with all 7 days
-2. Initialize `daysOfWeek` in constructor with: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-3. Add command for managing categories (optional for now, can be navigation later)
+**Changes needed**:
+- Add `public const string Add = "\ue145";` for the plus icon
 
-**Files to modify**:
-- `Pages/Settings/SettingsViewModel.cs`
+**Rationale**: Centralizes icon definitions as per project conventions.
 
-**Expected properties**:
+---
+
+### TODO 3: Create AddExpenseViewModel
+**File**: `FinanceBuddy/Pages/Expenses/AddExpenseViewModel.cs` (new file)
+
+**Implementation details**:
+- Inherit from `ObservableObject`
+- Observable properties:
+  - `DateTime SelectedDate` (default: DateTime.Now)
+  - `string Name`
+  - `string Store`
+  - `string Amount` (string to allow validation before parsing)
+  - `ObservableCollection<Category> Categories`
+  - `Category SelectedCategory`
+  - `bool IsValid` (computed property for button state)
+- Constructor:
+  - Inject `ExpenseService`
+  - Load categories from service
+  - Set first category as default
+- Command:
+  - `SaveExpenseCommand` (async Task):
+    - Validate all fields
+    - Parse amount to decimal
+    - Create new Expense object
+    - Call `ExpenseService.AddExpense()`
+    - Navigate back using `await Shell.Current.GoToAsync("..");`
+- Validation logic:
+  - `IsValid` should return true only when Name, Store, and Amount are not empty/null
+  - Amount must be numeric (use partial property to validate on change)
+
+**Rationale**: Follows MVVM pattern with proper separation of concerns. Validation logic in ViewModel enables data binding for button state.
+
+---
+
+### TODO 4: Create AddExpensePage.xaml
+**File**: `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml` (new file)
+
+**Implementation details**:
+- `ContentPage` with `x:DataType="viewmodel:AddExpenseViewModel"`
+- Use `ScrollView` for content (allows keyboard scrolling on mobile)
+- Layout structure (using Grid for better performance):
+  - Header with title "Add Expense"
+  - Form card (white background, rounded corners, shadow)
+    - **DatePicker** for Date field (bound to `SelectedDate`)
+    - **Entry** for Name (bound to `Name`, placeholder "Coffee, Lunch, etc.")
+    - **Entry** for Store (bound to `Store`, placeholder "Store name")
+    - **Entry** for Amount (bound to `Amount`, `Keyboard="Numeric"`, placeholder "0.00")
+    - **Picker** for Category (bound to `Categories` and `SelectedCategory`, `ItemDisplayBinding="{Binding Name}"`)
+  - Save button at bottom (bound to `SaveExpenseCommand`, `IsEnabled` bound to `IsValid`)
+
+**Validation UI**:
+- Use **DataTrigger** on each Entry to change border color to red when empty (but only after user has interacted)
+- Use **DataTrigger** on Save button to change opacity/appearance when disabled
+
+**Styling**: 
+- Match existing app style (Material Design 3)
+- Use Border with RoundRectangle for form fields
+- Apply shadows and proper spacing
+
+**Rationale**: XAML-only triggers for visual validation feedback. Behavior-based validation would be overcomplicated for this simple scenario.
+
+---
+
+### TODO 5: Create AddExpensePage.xaml.cs code-behind
+**File**: `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml.cs` (new file)
+
+**Implementation details**:
+- Constructor with `AddExpenseViewModel` parameter (dependency injection)
+- Set `BindingContext = viewModel`
+- Keep minimal code in code-behind (only initialization)
+
+**Rationale**: Follows project pattern of minimal code-behind with ViewModel injection.
+
+---
+
+### TODO 6: Add hover animation to floating action button
+**File**: `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml`
+
+**Implementation details**:
+Update the floating action button Border to include:
+- **PointerGestureRecognizer** with `PointerEntered` and `PointerExited` events
+- OR use **EventTrigger** with **ScaleToAnimation** for hover effect
+- Animation: Scale from 1.0 to 1.1 on hover (smooth, 200ms duration)
+
+**Decision**: Use MAUI built-in animations via triggers if possible, otherwise use behavior or simple code-behind for PointerOver state.
+
+**Rationale**: Triggers are XAML-only and demonstrate best practices. However, pointer events may require minimal code-behind or custom behavior depending on platform support.
+
+---
+
+### TODO 7: Add navigation command to floating action button
+**File**: `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml`
+
+**Implementation details**:
+- Add `TapGestureRecognizer` to the floating action button Border
+- Bind to new command in ExpensesViewModel: `NavigateToAddExpenseCommand`
+
+**File**: `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs`
+
+**Implementation details**:
+- Add `[RelayCommand]` method `NavigateToAddExpense`:
+  ```csharp
+  [RelayCommand]
+  private async Task NavigateToAddExpense()
+  {
+      await Shell.Current.GoToAsync("AddExpensePage");
+  }
+  ```
+
+**Rationale**: Command binding keeps business logic in ViewModel, not code-behind.
+
+---
+
+### TODO 8: Register AddExpensePage in AppShell
+**File**: `FinanceBuddy/AppShell.xaml.cs` (or use code registration)
+
+**Implementation details**:
+- Register route in AppShell constructor:
+  ```csharp
+  Routing.RegisterRoute("AddExpensePage", typeof(AddExpensePage));
+  ```
+
+**Rationale**: Required for Shell navigation to work.
+
+---
+
+### TODO 9: Register AddExpenseViewModel and AddExpensePage in DI container
+**File**: `FinanceBuddy/MauiProgram.cs`
+
+**Implementation details**:
+- Add to services:
+  ```csharp
+  builder.Services.AddTransient<AddExpenseViewModel>();
+  builder.Services.AddTransient<AddExpensePage>();
+  ```
+
+**Rationale**: Enables constructor injection for ViewModel and Page.
+
+---
+
+### TODO 10: Refresh expenses list after adding
+**File**: `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs`
+
+**Implementation details**:
+- Make `LoadExpenses` method public or create a `RefreshExpenses` method
+- Override `OnAppearing` in ExpensesPage.xaml.cs to call ViewModel refresh
+- OR use Shell navigation events to detect return from AddExpensePage
+
+**Alternative approach**: Use MessagingCenter or CommunityToolkit.Mvvm Messenger to send message when expense is added
+
+**Rationale**: Ensures expense list updates when returning from AddExpensePage.
+
+---
+
+## Validation Strategy
+
+### Field-level validation (using Triggers):
+- **Visual feedback**: Border color changes to red when field is invalid
+- **Entry validation**: Use DataTrigger on `Text` property length
+- **Amount validation**: Additional trigger for numeric validation
+
+### Form-level validation (using ViewModel):
+- **IsValid property**: Computed based on all required fields
+- **Save button**: Enabled only when IsValid is true
+- Use `[ObservableProperty]` with `NotifyCanExecuteChangedFor` attribute to update button state
+
+### Example validation pattern:
 ```csharp
 [ObservableProperty]
-private bool keepMeLoggedIn;
+[NotifyPropertyChangedFor(nameof(IsValid))]
+[NotifyCanExecuteChangedFor(nameof(SaveExpenseCommand))]
+private string _name = string.Empty;
 
-[ObservableProperty]
-private string selectedFirstDayOfWeek = "Monday";
-
-public List<string> DaysOfWeek { get; set; }
+public bool IsValid => 
+    !string.IsNullOrWhiteSpace(Name) && 
+    !string.IsNullOrWhiteSpace(Store) && 
+    !string.IsNullOrWhiteSpace(Amount) &&
+    decimal.TryParse(Amount, out _);
 ```
 
-**Validation**:
-- ViewModel compiles successfully
-- Properties are observable
+---
+
+## Animation Strategy
+
+### Floating Action Button Hover Animation:
+**Option 1: Use VisualStateManager** (Recommended)
+- Define VisualStates for "Normal" and "PointerOver"
+- Use VisualStateManager.VisualStateGroups in XAML
+- Animate Scale property
+
+**Option 2: Use PointerGestureRecognizer with Triggers**
+- PointerEntered/Exited events
+- Trigger animations via ViewExtensions (ScaleTo)
+
+**Option 3: Custom Behavior**
+- Create HoverScaleBehavior
+- Attach to Button
+- More reusable but adds complexity
+
+**Decision**: Use **VisualStateManager** for hover animation as it's XAML-based and follows MAUI best practices.
 
 ---
 
-### TODO 3: Implement SettingsPage XAML - Basic Structure
-**Goal**: Create the page layout with ScrollView and VerticalStackLayout
+## Technical Considerations
 
-**Steps**:
-1. Set page background to #F5F5F5
-2. Wrap content in ScrollView
-3. Use VerticalStackLayout with spacing for settings items
-4. Set padding to 20
+### Keyboard Handling:
+- Ensure `ScrollView` properly adjusts when keyboard appears on mobile
+- Use `Entry.ReturnType="Next"` for better UX
+- Last field should have `ReturnType="Done"`
 
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
+### Category Selection:
+- Default to first category to avoid null selection
+- Use `SelectedIndex="0"` on Picker for default selection
 
-**Validation**:
-- XAML compiles without errors
-- Basic structure is in place
+### Amount Input:
+- Use `Keyboard="Numeric"` for mobile numeric keyboard
+- Validate decimal format in ViewModel
+- Consider locale-specific decimal separators (future enhancement)
 
----
-
-### TODO 4: Implement Keep Me Logged In Setting
-**Goal**: Create the first setting row with label and switch
-
-**Steps**:
-1. Create Border with white background, rounded corners (12), padding (16)
-2. Inside Border, create Grid with 2 columns (*, Auto)
-3. Column 0: VerticalStackLayout with:
-   - Label "Keep me logged in" (FontSize 16, Bold, TextColor #333333)
-   - Label "Stay signed in for faster access" (FontSize 14, TextColor #666666)
-4. Column 1: Switch control bound to `KeepMeLoggedIn` property
-   - Set OnColor to blue (#5B9BED)
-   - VerticalOptions="Center"
-
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
-
-**Validation**:
-- Switch control appears on the right
-- Labels are properly styled
-- Switch toggles state and updates ViewModel property
+### Navigation:
+- Use modal presentation for AddExpensePage: `Shell.PresentationMode="ModalAnimated"`
+- Ensures clear visual hierarchy
 
 ---
 
-### TODO 5: Implement First Day of Week Setting
-**Goal**: Create the picker setting for selecting the first day of the week
+## Testing Validation
 
-**Steps**:
-1. Create Border with white background, rounded corners (12), padding (16), margin top (12)
-2. Inside Border, create Grid with 2 columns (*, Auto)
-3. Column 0: VerticalStackLayout with:
-   - Label "First day of the week" (FontSize 16, Bold, TextColor #333333)
-   - Label "Choose your week start day" (FontSize 14, TextColor #666666)
-4. Column 1: Picker control
-   - ItemsSource bound to `DaysOfWeek`
-   - SelectedItem bound to `SelectedFirstDayOfWeek`
-   - BackgroundColor: light blue (#E0F2FE)
-   - TextColor: #333333
-   - FontSize: 14
-   - Padding: 12,8
-   - VerticalOptions="Center"
-   - Add rounded corners using Border wrapper if needed
-
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
-
-**Validation**:
-- Picker displays all 7 days
-- Monday is selected by default
-- Selecting a day updates the ViewModel
-- Picker has rounded corners and proper styling
+After implementation, verify:
+1. ✅ Floating action button animates on hover (desktop) or press (mobile)
+2. ✅ Clicking FAB navigates to AddExpensePage
+3. ✅ AddExpensePage has correct ViewModel binding
+4. ✅ DatePicker defaults to current date
+5. ✅ Entry fields for Name, Store, Amount are present
+6. ✅ Amount field shows numeric keyboard on mobile
+7. ✅ Picker shows categories loaded from service
+8. ✅ First category is selected by default
+9. ✅ Save button is disabled when fields are empty
+10. ✅ Visual validation feedback (red borders) appears for invalid fields
+11. ✅ Save button becomes enabled when all required fields are filled
+12. ✅ Clicking Save adds expense and navigates back
+13. ✅ Expense list refreshes and shows newly added expense
 
 ---
 
-### TODO 6: Implement Manage Categories Navigation Button
-**Goal**: Create a clickable card that navigates to category management
+## Files to Create
+1. `FinanceBuddy/Pages/Expenses/AddExpenseViewModel.cs`
+2. `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml`
+3. `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml.cs`
 
-**Steps**:
-1. Create Border with white background, rounded corners (12), padding (16), margin top (12)
-2. Add TapGestureRecognizer (command can be added later or left empty for now)
-3. Inside Border, create Grid with 2 columns (*, Auto)
-4. Column 0: VerticalStackLayout with:
-   - Label "Categories" (FontSize 16, Bold, TextColor #333333)
-   - Label "Manage expense categories" (FontSize 14, TextColor #666666)
-5. Column 1: Label with chevron right icon
-   - Text: `{x:Static resources:Icons.ChevronRight}`
-   - FontFamily: MaterialSymbolsOutlined
-   - FontSize: 24
-   - TextColor: #666666
-   - VerticalOptions: Center
-
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
-
-**Validation**:
-- Card displays with proper styling
-- Chevron icon appears on the right
-- Card is tappable (visual feedback)
-- Layout matches the design
-
----
-
-### TODO 7: Add App Information Footer
-**Goal**: Add app name and version at the bottom (matching the screenshot)
-
-**Steps**:
-1. After the settings cards, add a VerticalStackLayout with margin top (40)
-2. Add two centered labels:
-   - "MoneyBuddy" (or "FinanceBuddy") - FontSize 16, TextColor #666666, centered
-   - "Version 1.2.0" - FontSize 14, TextColor #999999, centered
-
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
-
-**Validation**:
-- App info appears at bottom
-- Text is centered and properly styled
-
----
-
-### TODO 8: Final Styling and Polish
-**Goal**: Ensure all visual details match the design
-
-**Steps**:
-1. Verify all Border elements have:
-   - BackgroundColor: White
-   - StrokeThickness: 0
-   - CornerRadius: 12
-   - Proper padding and margins
-2. Verify text colors:
-   - Primary text: #333333
-   - Secondary text: #666666
-   - Tertiary text: #999999
-3. Verify spacing between cards (12-16px)
-4. Test on Android emulator to ensure it matches the screenshot
-
-**Files to modify**:
-- `Pages/Settings/SettingsPage.xaml`
-
-**Validation**:
-- Visual appearance matches the screenshot
-- All spacing and colors are correct
-- Layout is clean and professional
+## Files to Modify
+1. `FinanceBuddy/Services/ExpenseService.cs` - Add AddExpense method
+2. `FinanceBuddy/Resources/Icons.cs` - Add Plus icon
+3. `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml` - Add hover animation and navigation to FAB
+4. `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs` - Add navigation command and refresh logic
+5. `FinanceBuddy/AppShell.xaml.cs` - Register route (or create if doesn't exist)
+6. `FinanceBuddy/MauiProgram.cs` - Register DI services
+7. `FinanceBuddy/GlobalXmlns.cs` - Add namespace if behaviors are used
 
 ---
 
 ## Implementation Order
-1. TODO 1: Add chevron icon (if needed)
-2. TODO 2: Implement ViewModel properties
-3. TODO 3: Create basic page structure
-4. TODO 4: Add Keep me logged in setting
-5. TODO 5: Add First day of week setting
-6. TODO 6: Add Manage categories button
-7. TODO 7: Add app information footer
-8. TODO 8: Final styling and testing
+1. TODO 1: Update ExpenseService (foundation)
+2. TODO 2: Add icon (small, quick)
+3. TODO 3: Create ViewModel (core logic)
+4. TODO 4 & 5: Create Page XAML and code-behind (UI)
+5. TODO 8 & 9: Register in Shell and DI (infrastructure)
+6. TODO 7: Add navigation command (connect pages)
+7. TODO 6: Add hover animation (polish)
+8. TODO 10: Add refresh logic (complete flow)
 
-## Testing Checklist
-After all TODOs:
-- [ ] Page title is "Settings"
-- [ ] Keep me logged in toggle appears with subtitle
-- [ ] Switch control works and updates ViewModel
-- [ ] First day of week picker shows all 7 days
-- [ ] Monday is selected by default
-- [ ] Picker updates ViewModel when changed
-- [ ] Categories card appears with subtitle and chevron
-- [ ] All cards have white background and rounded corners
-- [ ] Page background is light gray (#F5F5F5)
-- [ ] Spacing and padding match the design
-- [ ] App name and version appear at bottom
-- [ ] Page is scrollable if needed
-- [ ] Visual appearance matches the screenshot
+---
 
 ## Notes
-- Keep code simple and clean
-- Use VerticalStackLayout inside each card for label groups
-- Follow MVVM patterns with data binding
-- Ask for approval after each TODO before proceeding
-- No complex logic needed - this is primarily a UI implementation
-- The Manage Categories button can be a placeholder for now (no navigation required initially)
+- This implementation prioritizes **simplicity and best practices** over complex custom solutions
+- Uses **Triggers for visual changes** (XAML-only) and **ViewModel properties for logic validation**
+- Behaviors could be added for reusable validation patterns but may be overkill for this scope
+- VisualStateManager provides the cleanest hover animation approach
+- All code follows existing project conventions and architectural patterns

@@ -5,6 +5,7 @@ namespace FinanceBuddy.Services;
 public class ExpenseService
 {
 	private readonly List<Category> _categories;
+	private readonly List<Expense> _userExpenses;
 
 	public ExpenseService()
 	{
@@ -16,11 +17,13 @@ public class ExpenseService
 			new Category { Name = "Entertainment", Icon = "\ue02c", IconColor = Color.FromRgba("#F0E5FF") },
 			new Category { Name = "Coffee", Icon = "\uef45", IconColor = Color.FromRgba("#FFF5E5") }
 		};
+		_userExpenses = new List<Expense>();
 	}
 
 	public List<Expense> GetExpensesByMonth(DateTime date)
 	{
 		var startOfMonth = new DateTime(date.Year, date.Month, 1);
+		var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
 		var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
 		var expenses = new List<Expense>();
 
@@ -47,7 +50,19 @@ public class ExpenseService
 			}
 		}
 
-		return expenses;
+		// Add user expenses for this month
+		var userExpensesForMonth = _userExpenses
+			.Where(e => e.Date >= startOfMonth && e.Date <= endOfMonth)
+			.ToList();
+		expenses.AddRange(userExpensesForMonth);
+
+		// Sort by date descending
+		return expenses.OrderByDescending(e => e.Date).ToList();
+	}
+
+	public void AddExpense(Expense expense)
+	{
+		_userExpenses.Add(expense);
 	}
 
 	public List<Expense> GetExpensesByWeek(DateTime date)

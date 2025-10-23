@@ -1,15 +1,20 @@
-# Feature: Settings page
-The Settings page should have the following settings, designed the way it is in the picture:
-- Keep me logged in (with a Switch control)
-- First day of the week: Picker with the options Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. The Picker is on the right of the screen
-- Manage categories button (Categories label left, chevron on the right)
-- Skip the Notifications, Export Data, and Privacy and security settings of the picture
+# Feature: Add Expense page
+On the ExpensesPage, there's a floating button with a plus-icon. This button must lead to a AddExpensePage. On the AddExpensePage, the user should be able to fill in fields for adding a Expense. I also want this page to be an example for using triggers and behaviors in .NET MAUI. Can you create the page with the necessary validation.
+- ExpensesPage: Button with plus-icon should lead to AddExpensePage.
+- When hovering over the button, it should animate being pressed (fade to being smaller and bigger for example), using a Trigger of Behavior, whatever is the best solution for this.
+- On the AddExpensePage, the user should be able to enter the necessary field: Date, Name, Store, Amount and Category. 
 
 ## Acceptance criteria
-- There is a row with the label 'Keep me logged in', on the same row as a Switch control (no commands needed). This is the same as in the picture. 
-- There is a row with the label 'First day of the week:' on the left, and the Picker on the left, and the subtitle as shown in the picture.
-- The picker options are:  Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-- There is a Border with a Category title and subtitle 'Manage expense categories' and a chevron on the right as showed in the picture. 
+- ExpensesPage: the button with the plus sign animated when hovering over it.
+- ExpensesPage: the button with the plus sign leads to the AddExpensePage.
+- AddExpensePage: has a corresponding ViewModel, which is also set as the x:DataType in the AddExpensePage.xaml.
+- AddExpensePage: Has a Data Picker for the Date field
+- AddExpensePage: Has Entry fields for Name, Store and Amount. Amount should be only numeric. 
+- AddExpensePage: Has a Picker for the Categories. The list of categories should be fetched from the service. The first category in the list should be set as the chosen category by default.
+- AddExpensePage: There should be a button for saving the expense, saving it with the ExpenseService and then navigating back (await Shell.Current.GoToAsync("..");)
+- There should be validation on the fields Name, Store and Amount field. 
+- AddExpensePage: The button for saving the expense should be enabled only when the Name, Store and Amount field are set.
+- Use Triggers or Behaviors or both when this is the best option (mainly for XAML only changes), but use data binding with the viewmodel if that makes more sense. Use best practices regarding this.
 
 ## Other considerations
 You must follow the rules set in the instructions.prompt.md file.

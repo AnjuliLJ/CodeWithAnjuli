@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceBuddy.Expenses.AddExpensePage"
+             xmlns:viewmodel="clr-namespace:FinanceBuddy.Expenses"
+             xmlns:models="clr-namespace:FinanceBuddy.Models"
+             x:DataType="viewmodel:AddExpenseViewModel"
+             Title="Add Expense"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="#F5F5F5">
+    
+    <ScrollView>
+        <Grid Padding="16" RowDefinitions="Auto,*,Auto" RowSpacing="16">
+            
+            <!-- Header -->
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
+                <Label Text="Add New Expense"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#1C1B1F" />
+                <Label Text="Fill in the details below"
+                       FontSize="14"
+                       TextColor="#49454F" />
+            </VerticalStackLayout>
+            
+            <!-- Form Card -->
+            <Border Grid.Row="1"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="8" Offset="0,2" />
+                </Border.Shadow>
+                
+                <VerticalStackLayout Spacing="20">
+                    
+                    <!-- Date Field -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Date"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F" />
+                        <Border BackgroundColor="#F5F5F5"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="12,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <DatePicker Date="{Binding SelectedDate}"
+                                        TextColor="#1C1B1F"
+                                        BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <!-- Name Field -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Expense Name"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F" />
+                        <Border x:Name="NameBorder"
+                                BackgroundColor="#F5F5F5"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="12,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Name}"
+                                           Value="">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Name}"
+                                           Value="{x:Null}">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Entry Text="{Binding Name}"
+                                   Placeholder="Coffee, Lunch, etc."
+                                   TextColor="#1C1B1F"
+                                   PlaceholderColor="#9E9E9E"
+                                   BackgroundColor="Transparent"
+                                   ReturnType="Next" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <!-- Store Field -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Store"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F" />
+                        <Border x:Name="StoreBorder"
+                                BackgroundColor="#F5F5F5"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="12,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Store}"
+                                           Value="">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Store}"
+                                           Value="{x:Null}">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Entry Text="{Binding Store}"
+                                   Placeholder="Store name"
+                                   TextColor="#1C1B1F"
+                                   PlaceholderColor="#9E9E9E"
+                                   BackgroundColor="Transparent"
+                                   ReturnType="Next" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <!-- Amount Field -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Amount"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F" />
+                        <Border x:Name="AmountBorder"
+                                BackgroundColor="#F5F5F5"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="12,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Amount}"
+                                           Value="">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                           Binding="{Binding Amount}"
+                                           Value="{x:Null}">
+                                    <Setter Property="Stroke" Value="#E0E0E0" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Entry Text="{Binding Amount}"
+                                   Placeholder="0.00"
+                                   Keyboard="Numeric"
+                                   TextColor="#1C1B1F"
+                                   PlaceholderColor="#9E9E9E"
+                                   BackgroundColor="Transparent"
+                                   ReturnType="Done" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <!-- Category Field -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Category"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1C1B1F" />
+                        <Border BackgroundColor="#F5F5F5"
+                                StrokeThickness="1"
+                                Stroke="#E0E0E0"
+                                Padding="12,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Picker ItemsSource="{Binding Categories}"
+                                    SelectedItem="{Binding SelectedCategory}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    TextColor="#1C1B1F"
+                                    BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- Save Button -->
+            <Border Grid.Row="2"
+                    BackgroundColor="#6750A4"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="8" Offset="0,4" />
+                </Border.Shadow>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                               Binding="{Binding IsValid}"
+                               Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveExpenseCommand}" />
+                </Border.GestureRecognizers>
+                
+                <Label Text="Save Expense"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+            
+        </Grid>
+    </ScrollView>
+</ContentPage>

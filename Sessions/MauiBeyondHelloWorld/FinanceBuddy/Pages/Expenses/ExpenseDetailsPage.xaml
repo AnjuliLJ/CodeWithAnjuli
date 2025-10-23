@@ -119,12 +119,11 @@
                            TextColor="#666666"
                            LineBreakMode="WordWrap" />
                     
-                    <!-- Custom AnimatedButton with platform-specific animations -->
-                    <controls:AnimatedButton Text="Try Custom Button"
-                                            BackgroundColor="#5B9BED"
-                                            TextColor="White"
-                                            CornerRadius="12"
-                                            HeightRequest="48"/>
+                    <Button Text="Go back" BackgroundColor="#5B9BED"
+                            Command="{Binding GoBackCommand}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="48"/>
                 </VerticalStackLayout>
             </Border>
             

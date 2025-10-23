@@ -8,4 +8,5 @@ public static class Icons
 	public const string ChevronLeft = "\ue5cb";
 	public const string ChevronRight = "\ue5cc";
 	public const string Close = "\ue5cd";
+	public const string Add = "\ue145";
 }

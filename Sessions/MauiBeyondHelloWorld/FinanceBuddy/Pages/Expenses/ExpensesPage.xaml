@@ -4,6 +4,7 @@
              x:Class="FinanceBuddy.Expenses.ExpensesPage"
              xmlns:viewmodel="clr-namespace:FinanceBuddy.Expenses"
              xmlns:models="clr-namespace:FinanceBuddy.Models"
+             xmlns:resources="clr-namespace:FinanceBuddy.Resources"
              x:DataType="viewmodel:ExpensesViewModel"
              Title="Expenses"
              BackgroundColor="#F5F5F5">
@@ -131,26 +132,21 @@
         <!-- Floating Action Button -->
         <AbsoluteLayout HorizontalOptions="Fill"
                         VerticalOptions="Fill"
-                        InputTransparent="True">
-            <Border AbsoluteLayout.LayoutBounds="0.95,0.90,56,56"
-                    AbsoluteLayout.LayoutFlags="PositionProportional"
-                    BackgroundColor="#6750A4"
-                    StrokeThickness="0"
-                    InputTransparent="False">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="28" />
-                </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="Black" Opacity="0.3" Radius="8" Offset="0,4" />
-                </Border.Shadow>
-                
-                <Label Text="+"
-                       FontSize="32"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-            </Border>
+                        InputTransparent="True" ZIndex="1">
+            <ImageButton AbsoluteLayout.LayoutBounds="0.95,0.90,56,56"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         BackgroundColor="#6750A4"
+                         CornerRadius="28"
+                         Command="{Binding NavigateToAddExpenseCommand}"
+                         Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=8, Offset='0,4'}"
+                         InputTransparent="False">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="MaterialSymbolsOutlined"
+                                   Glyph="{x:Static resources:Icons.Add}"
+                                   Color="White"
+                                   Size="32" />
+                </ImageButton.Source>
+            </ImageButton>
         </AbsoluteLayout>
     </Grid>
 </ContentPage>

@@ -25,6 +25,11 @@ public partial class ExpensesViewModel : ObservableObject
 		LoadExpenses(DateTime.Now);
 	}
 
+	public void RefreshExpenses()
+	{
+		LoadExpenses(DateTime.Now);
+	}
+
 	private void LoadExpenses(DateTime date)
 	{
 		// Set current month display
@@ -49,5 +54,11 @@ public partial class ExpensesViewModel : ObservableObject
 		};
 
 		await Shell.Current.GoToAsync("ExpenseDetailsPage", navigationParameter);
+	}
+
+	[RelayCommand]
+	private async Task NavigateToAddExpense()
+	{
+		await Shell.Current.GoToAsync("AddExpensePage");
 	}
 }
