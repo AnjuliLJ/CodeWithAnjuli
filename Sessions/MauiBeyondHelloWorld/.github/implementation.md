@@ -1,313 +1,301 @@
-# Implementation Plan: Add Expense Feature
+# Chart Replacement Research for .NET MAUI
 
-## Overview
-This plan implements an "Add Expense" feature with a focus on showcasing .NET MAUI triggers and behaviors for animations and validation. The implementation follows MVVM patterns and existing architectural conventions in the project.
+## Current State
+- Currently using **Syncfusion.Maui.Charts** (version 31.1.22)
+- Chart displays column/bar chart with:
+  - Category axis (X-axis)
+  - Numerical axis (Y-axis)
+  - Data labels inside columns
+  - Custom styling (blue columns, white text labels)
+  - Dynamic data binding to ChartDataPoint collection
 
-## Context Analysis
-- **Existing Patterns**: MVVM with CommunityToolkit.Mvvm, dependency injection, Shell navigation
-- **Service Layer**: ExpenseService provides category data and will need an `AddExpense` method
-- **Navigation**: Shell-based navigation using `GoToAsync`
-- **UI Style**: Material Design 3 with rounded borders, shadows, and card-based layouts
-- **Icons**: MaterialSymbolsOutlined font, defined in Resources/Icons.cs
-
-## Implementation Steps
-
-### TODO 1: Update ExpenseService to support adding expenses
-**File**: `FinanceBuddy/Services/ExpenseService.cs`
-
-**Changes needed**:
-- Add a private `List<Expense>` field to store user-added expenses
-- Create `AddExpense(Expense expense)` method to add new expenses to the list
-- Modify `GetExpensesByMonth()` to include user-added expenses along with generated ones
-- Ensure user expenses are persisted in the list (for this demo, in-memory is sufficient)
-
-**Rationale**: The service needs to support adding expenses, not just generating random ones.
+## Requirements
+- Column/Bar chart support
+- Data binding capabilities
+- Customizable styling (colors, labels)
+- Data labels on columns
+- Cross-platform (iOS, Android, macOS Catalyst, Windows)
+- Free or open-source preferred
 
 ---
 
-### TODO 2: Add Plus icon to Icons.cs
-**File**: `FinanceBuddy/Resources/Icons.cs`
+## Option 1: Microcharts (Recommended ⭐)
 
-**Changes needed**:
-- Add `public const string Add = "\ue145";` for the plus icon
+**Package**: `Microcharts.Maui`
 
-**Rationale**: Centralizes icon definitions as per project conventions.
+### Pros:
+✅ **Free and open-source** (MIT license)  
+✅ Very lightweight and simple to use  
+✅ Good for simple charts (bar, line, donut, pie, radar)  
+✅ Cross-platform support  
+✅ Active maintenance  
+✅ No complex licensing  
+✅ Easy to customize colors  
+✅ Works well for dashboard/summary charts  
 
----
+### Cons:
+❌ Less feature-rich than commercial solutions  
+❌ Limited interactivity  
+❌ Fewer customization options for complex scenarios  
+❌ Documentation is minimal  
 
-### TODO 3: Create AddExpenseViewModel
-**File**: `FinanceBuddy/Pages/Expenses/AddExpenseViewModel.cs` (new file)
+### Implementation Complexity: **Low** ⭐⭐⭐⭐⭐
 
-**Implementation details**:
-- Inherit from `ObservableObject`
-- Observable properties:
-  - `DateTime SelectedDate` (default: DateTime.Now)
-  - `string Name`
-  - `string Store`
-  - `string Amount` (string to allow validation before parsing)
-  - `ObservableCollection<Category> Categories`
-  - `Category SelectedCategory`
-  - `bool IsValid` (computed property for button state)
-- Constructor:
-  - Inject `ExpenseService`
-  - Load categories from service
-  - Set first category as default
-- Command:
-  - `SaveExpenseCommand` (async Task):
-    - Validate all fields
-    - Parse amount to decimal
-    - Create new Expense object
-    - Call `ExpenseService.AddExpense()`
-    - Navigate back using `await Shell.Current.GoToAsync("..");`
-- Validation logic:
-  - `IsValid` should return true only when Name, Store, and Amount are not empty/null
-  - Amount must be numeric (use partial property to validate on change)
+### Code Example:
+```xaml
+<microcharts:ChartView Chart="{Binding BarChart}"
+                       HeightRequest="300"
+                       BackgroundColor="White" />
+```
 
-**Rationale**: Follows MVVM pattern with proper separation of concerns. Validation logic in ViewModel enables data binding for button state.
-
----
-
-### TODO 4: Create AddExpensePage.xaml
-**File**: `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml` (new file)
-
-**Implementation details**:
-- `ContentPage` with `x:DataType="viewmodel:AddExpenseViewModel"`
-- Use `ScrollView` for content (allows keyboard scrolling on mobile)
-- Layout structure (using Grid for better performance):
-  - Header with title "Add Expense"
-  - Form card (white background, rounded corners, shadow)
-    - **DatePicker** for Date field (bound to `SelectedDate`)
-    - **Entry** for Name (bound to `Name`, placeholder "Coffee, Lunch, etc.")
-    - **Entry** for Store (bound to `Store`, placeholder "Store name")
-    - **Entry** for Amount (bound to `Amount`, `Keyboard="Numeric"`, placeholder "0.00")
-    - **Picker** for Category (bound to `Categories` and `SelectedCategory`, `ItemDisplayBinding="{Binding Name}"`)
-  - Save button at bottom (bound to `SaveExpenseCommand`, `IsEnabled` bound to `IsValid`)
-
-**Validation UI**:
-- Use **DataTrigger** on each Entry to change border color to red when empty (but only after user has interacted)
-- Use **DataTrigger** on Save button to change opacity/appearance when disabled
-
-**Styling**: 
-- Match existing app style (Material Design 3)
-- Use Border with RoundRectangle for form fields
-- Apply shadows and proper spacing
-
-**Rationale**: XAML-only triggers for visual validation feedback. Behavior-based validation would be overcomplicated for this simple scenario.
-
----
-
-### TODO 5: Create AddExpensePage.xaml.cs code-behind
-**File**: `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml.cs` (new file)
-
-**Implementation details**:
-- Constructor with `AddExpenseViewModel` parameter (dependency injection)
-- Set `BindingContext = viewModel`
-- Keep minimal code in code-behind (only initialization)
-
-**Rationale**: Follows project pattern of minimal code-behind with ViewModel injection.
-
----
-
-### TODO 6: Add hover animation to floating action button
-**File**: `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml`
-
-**Implementation details**:
-Update the floating action button Border to include:
-- **PointerGestureRecognizer** with `PointerEntered` and `PointerExited` events
-- OR use **EventTrigger** with **ScaleToAnimation** for hover effect
-- Animation: Scale from 1.0 to 1.1 on hover (smooth, 200ms duration)
-
-**Decision**: Use MAUI built-in animations via triggers if possible, otherwise use behavior or simple code-behind for PointerOver state.
-
-**Rationale**: Triggers are XAML-only and demonstrate best practices. However, pointer events may require minimal code-behind or custom behavior depending on platform support.
-
----
-
-### TODO 7: Add navigation command to floating action button
-**File**: `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml`
-
-**Implementation details**:
-- Add `TapGestureRecognizer` to the floating action button Border
-- Bind to new command in ExpensesViewModel: `NavigateToAddExpenseCommand`
-
-**File**: `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs`
-
-**Implementation details**:
-- Add `[RelayCommand]` method `NavigateToAddExpense`:
-  ```csharp
-  [RelayCommand]
-  private async Task NavigateToAddExpense()
-  {
-      await Shell.Current.GoToAsync("AddExpensePage");
-  }
-  ```
-
-**Rationale**: Command binding keeps business logic in ViewModel, not code-behind.
-
----
-
-### TODO 8: Register AddExpensePage in AppShell
-**File**: `FinanceBuddy/AppShell.xaml.cs` (or use code registration)
-
-**Implementation details**:
-- Register route in AppShell constructor:
-  ```csharp
-  Routing.RegisterRoute("AddExpensePage", typeof(AddExpensePage));
-  ```
-
-**Rationale**: Required for Shell navigation to work.
-
----
-
-### TODO 9: Register AddExpenseViewModel and AddExpensePage in DI container
-**File**: `FinanceBuddy/MauiProgram.cs`
-
-**Implementation details**:
-- Add to services:
-  ```csharp
-  builder.Services.AddTransient<AddExpenseViewModel>();
-  builder.Services.AddTransient<AddExpensePage>();
-  ```
-
-**Rationale**: Enables constructor injection for ViewModel and Page.
-
----
-
-### TODO 10: Refresh expenses list after adding
-**File**: `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs`
-
-**Implementation details**:
-- Make `LoadExpenses` method public or create a `RefreshExpenses` method
-- Override `OnAppearing` in ExpensesPage.xaml.cs to call ViewModel refresh
-- OR use Shell navigation events to detect return from AddExpensePage
-
-**Alternative approach**: Use MessagingCenter or CommunityToolkit.Mvvm Messenger to send message when expense is added
-
-**Rationale**: Ensures expense list updates when returning from AddExpensePage.
-
----
-
-## Validation Strategy
-
-### Field-level validation (using Triggers):
-- **Visual feedback**: Border color changes to red when field is invalid
-- **Entry validation**: Use DataTrigger on `Text` property length
-- **Amount validation**: Additional trigger for numeric validation
-
-### Form-level validation (using ViewModel):
-- **IsValid property**: Computed based on all required fields
-- **Save button**: Enabled only when IsValid is true
-- Use `[ObservableProperty]` with `NotifyCanExecuteChangedFor` attribute to update button state
-
-### Example validation pattern:
 ```csharp
-[ObservableProperty]
-[NotifyPropertyChangedFor(nameof(IsValid))]
-[NotifyCanExecuteChangedFor(nameof(SaveExpenseCommand))]
-private string _name = string.Empty;
+// In ViewModel
+public ChartEntry[] Entries { get; set; }
+public BarChart BarChart { get; set; }
 
-public bool IsValid => 
-    !string.IsNullOrWhiteSpace(Name) && 
-    !string.IsNullOrWhiteSpace(Store) && 
-    !string.IsNullOrWhiteSpace(Amount) &&
-    decimal.TryParse(Amount, out _);
+private void LoadChart()
+{
+    Entries = ChartData.Select(d => new ChartEntry((float)d.Amount)
+    {
+        Label = d.Label,
+        ValueLabel = $"€{d.Amount:F0}",
+        Color = SKColor.Parse("#5B9BED")
+    }).ToArray();
+    
+    BarChart = new BarChart { Entries = Entries };
+}
+```
+
+### NuGet Package:
+```
+dotnet add package Microcharts.Maui
 ```
 
 ---
 
-## Animation Strategy
+## Option 2: LiveChartsCore (Advanced Alternative)
 
-### Floating Action Button Hover Animation:
-**Option 1: Use VisualStateManager** (Recommended)
-- Define VisualStates for "Normal" and "PointerOver"
-- Use VisualStateManager.VisualStateGroups in XAML
-- Animate Scale property
+**Package**: `LiveChartsCore.SkiaSharpView.Maui`
 
-**Option 2: Use PointerGestureRecognizer with Triggers**
-- PointerEntered/Exited events
-- Trigger animations via ViewExtensions (ScaleTo)
+### Pros:
+✅ **Free and open-source** (MIT license)  
+✅ Very powerful and feature-rich  
+✅ Excellent documentation  
+✅ Highly customizable  
+✅ Smooth animations  
+✅ Interactive charts  
+✅ Multiple chart types  
+✅ Active development  
 
-**Option 3: Custom Behavior**
-- Create HoverScaleBehavior
-- Attach to Button
-- More reusable but adds complexity
+### Cons:
+❌ More complex API (steeper learning curve)  
+❌ Heavier dependency (SkiaSharp)  
+❌ May be overkill for simple charts  
 
-**Decision**: Use **VisualStateManager** for hover animation as it's XAML-based and follows MAUI best practices.
+### Implementation Complexity: **Medium** ⭐⭐⭐
 
----
+### Code Example:
+```xaml
+<lvc:CartesianChart Series="{Binding Series}"
+                    XAxes="{Binding XAxes}"
+                    YAxes="{Binding YAxes}"
+                    HeightRequest="300" />
+```
 
-## Technical Considerations
+```csharp
+// In ViewModel
+public ISeries[] Series { get; set; }
 
-### Keyboard Handling:
-- Ensure `ScrollView` properly adjusts when keyboard appears on mobile
-- Use `Entry.ReturnType="Next"` for better UX
-- Last field should have `ReturnType="Done"`
+private void LoadChart()
+{
+    Series = new ISeries[]
+    {
+        new ColumnSeries<ChartDataPoint>
+        {
+            Values = ChartData,
+            Mapping = (dataPoint, point) =>
+            {
+                point.PrimaryValue = (double)dataPoint.Amount;
+                point.SecondaryValue = point.Context.Index;
+            },
+            Fill = new SolidColorPaint(SKColors.Parse("#5B9BED")),
+            DataLabelsSize = 11,
+            DataLabelsPaint = new SolidColorPaint(SKColors.White)
+        }
+    };
+}
+```
 
-### Category Selection:
-- Default to first category to avoid null selection
-- Use `SelectedIndex="0"` on Picker for default selection
-
-### Amount Input:
-- Use `Keyboard="Numeric"` for mobile numeric keyboard
-- Validate decimal format in ViewModel
-- Consider locale-specific decimal separators (future enhancement)
-
-### Navigation:
-- Use modal presentation for AddExpensePage: `Shell.PresentationMode="ModalAnimated"`
-- Ensures clear visual hierarchy
-
----
-
-## Testing Validation
-
-After implementation, verify:
-1. ✅ Floating action button animates on hover (desktop) or press (mobile)
-2. ✅ Clicking FAB navigates to AddExpensePage
-3. ✅ AddExpensePage has correct ViewModel binding
-4. ✅ DatePicker defaults to current date
-5. ✅ Entry fields for Name, Store, Amount are present
-6. ✅ Amount field shows numeric keyboard on mobile
-7. ✅ Picker shows categories loaded from service
-8. ✅ First category is selected by default
-9. ✅ Save button is disabled when fields are empty
-10. ✅ Visual validation feedback (red borders) appears for invalid fields
-11. ✅ Save button becomes enabled when all required fields are filled
-12. ✅ Clicking Save adds expense and navigates back
-13. ✅ Expense list refreshes and shows newly added expense
+### NuGet Package:
+```
+dotnet add package LiveChartsCore.SkiaSharpView.Maui
+```
 
 ---
 
-## Files to Create
-1. `FinanceBuddy/Pages/Expenses/AddExpenseViewModel.cs`
-2. `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml`
-3. `FinanceBuddy/Pages/Expenses/AddExpensePage.xaml.cs`
+## Option 3: OxyPlot (Mature Option)
 
-## Files to Modify
-1. `FinanceBuddy/Services/ExpenseService.cs` - Add AddExpense method
-2. `FinanceBuddy/Resources/Icons.cs` - Add Plus icon
-3. `FinanceBuddy/Pages/Expenses/ExpensesPage.xaml` - Add hover animation and navigation to FAB
-4. `FinanceBuddy/Pages/Expenses/ExpensesViewModel.cs` - Add navigation command and refresh logic
-5. `FinanceBuddy/AppShell.xaml.cs` - Register route (or create if doesn't exist)
-6. `FinanceBuddy/MauiProgram.cs` - Register DI services
-7. `FinanceBuddy/GlobalXmlns.cs` - Add namespace if behaviors are used
+**Package**: `OxyPlot.Maui`
 
----
+### Pros:
+✅ **Free and open-source** (MIT license)  
+✅ Very mature library (existed for years)  
+✅ Good documentation  
+✅ Wide variety of chart types  
+✅ Cross-platform  
 
-## Implementation Order
-1. TODO 1: Update ExpenseService (foundation)
-2. TODO 2: Add icon (small, quick)
-3. TODO 3: Create ViewModel (core logic)
-4. TODO 4 & 5: Create Page XAML and code-behind (UI)
-5. TODO 8 & 9: Register in Shell and DI (infrastructure)
-6. TODO 7: Add navigation command (connect pages)
-7. TODO 6: Add hover animation (polish)
-8. TODO 10: Add refresh logic (complete flow)
+### Cons:
+❌ .NET MAUI support is newer/less mature  
+❌ Less modern API  
+❌ Fewer built-in animations  
+❌ Styling can be verbose  
+
+### Implementation Complexity: **Medium** ⭐⭐⭐
 
 ---
 
-## Notes
-- This implementation prioritizes **simplicity and best practices** over complex custom solutions
-- Uses **Triggers for visual changes** (XAML-only) and **ViewModel properties for logic validation**
-- Behaviors could be added for reusable validation patterns but may be overkill for this scope
-- VisualStateManager provides the cleanest hover animation approach
-- All code follows existing project conventions and architectural patterns
+## Option 4: Custom SkiaSharp Implementation
+
+**Package**: `SkiaSharp.Views.Maui.Controls`
+
+### Pros:
+✅ Full control over rendering  
+✅ SkiaSharp already commonly used in MAUI  
+✅ Can create exactly what you need  
+✅ Best performance  
+
+### Cons:
+❌ **High development time**  
+❌ Need to implement everything from scratch  
+❌ Maintenance burden  
+❌ Not recommended unless very specific needs  
+
+### Implementation Complexity: **Very High** ⭐
+
+---
+
+## Option 5: DrawableView (MAUI Native)
+
+**Built-in**: Uses `Microsoft.Maui.Graphics`
+
+### Pros:
+✅ No external dependencies  
+✅ Built into MAUI  
+✅ Lightweight  
+✅ Full control  
+
+### Cons:
+❌ Need to implement chart logic yourself  
+❌ No built-in chart types  
+❌ Time-consuming  
+❌ Reinventing the wheel  
+
+### Implementation Complexity: **Very High** ⭐
+
+---
+
+## Recommendation Summary
+
+### 🏆 Best Choice: **Microcharts.Maui**
+
+**Why?**
+1. **Simplicity**: Easiest to implement and maintain
+2. **Free**: No licensing concerns
+3. **Sufficient**: Meets all current requirements for FinanceBuddy
+4. **Lightweight**: Won't bloat the app
+5. **Clean API**: Minimal code changes needed
+6. **Perfect for dashboards**: Exactly the use case in this app
+
+### Migration Effort Estimate:
+- **Low complexity**: ~1-2 hours
+- Remove Syncfusion package
+- Install Microcharts.Maui
+- Update ChartsPage.xaml (replace chart control)
+- Update ChartsViewModel (convert ChartData to ChartEntry[])
+- Test on all platforms
+
+### 🥈 Alternative: **LiveChartsCore** (if you need more features later)
+
+**When to use?**
+- Need advanced interactivity (tooltips, zooming, etc.)
+- Need animations
+- Plan to add more complex charts in the future
+- Want a more professional, polished look
+
+---
+
+## Implementation Plan for Microcharts
+
+### Step 1: Remove Syncfusion
+```bash
+dotnet remove package Syncfusion.Maui.Charts
+```
+
+Remove from MauiProgram.cs:
+- `.ConfigureSyncfusionCore()`
+- License registration line
+
+### Step 2: Add Microcharts
+```bash
+dotnet add package Microcharts.Maui
+```
+
+### Step 3: Update ChartsViewModel
+- Convert `ObservableCollection<ChartDataPoint>` to `ChartEntry[]`
+- Create `BarChart` property
+- Update `LoadChartData()` to create entries
+
+### Step 4: Update ChartsPage.xaml
+- Replace `chart:SfCartesianChart` with `microcharts:ChartView`
+- Bind to `BarChart` property
+- Simplify XAML significantly
+
+### Step 5: Test
+- Verify chart displays correctly
+- Check period switching (Week/Month/Year)
+- Verify category filtering
+- Test on multiple platforms
+
+---
+
+## Code Comparison
+
+### Before (Syncfusion - Complex):
+```xaml
+<chart:SfCartesianChart>
+    <chart:SfCartesianChart.XAxes>
+        <chart:CategoryAxis ShowMajorGridLines="False" />
+    </chart:SfCartesianChart.XAxes>
+    <chart:SfCartesianChart.YAxes>
+        <chart:NumericalAxis ShowMajorGridLines="True" />
+    </chart:SfCartesianChart.YAxes>
+    <chart:ColumnSeries ItemsSource="{Binding ChartData}"
+                        XBindingPath="Label"
+                        YBindingPath="Amount"
+                        Fill="#5B9BED"
+                        ShowDataLabels="True">
+        <!-- Complex data label configuration -->
+    </chart:ColumnSeries>
+</chart:SfCartesianChart>
+```
+
+### After (Microcharts - Simple):
+```xaml
+<microcharts:ChartView Chart="{Binding BarChart}"
+                       HeightRequest="300"
+                       BackgroundColor="White" />
+```
+
+---
+
+## Conclusion
+
+**Microcharts.Maui** is the best replacement for this project because:
+- ✅ Removes licensing dependency
+- ✅ Simpler codebase
+- ✅ Faster build times (smaller dependency)
+- ✅ Easier to maintain
+- ✅ Perfect for the dashboard use case
+- ✅ Free forever
+
+The app's charts are primarily for **data visualization** rather than **complex data analysis**, making Microcharts an ideal fit.

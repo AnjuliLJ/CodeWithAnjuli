@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using FinanceBuddy.Models;
 using FinanceBuddy.Services;
 using System.Collections.ObjectModel;
+using Microcharts;
+using SkiaSharp;
 
 namespace FinanceBuddy.Charts;
 
@@ -11,7 +13,7 @@ public partial class ChartsViewModel : ObservableObject
 	private readonly ExpenseService _expenseService;
 
 	[ObservableProperty]
-	private ObservableCollection<ChartDataPoint> chartData = new();
+	private Chart? _barChart;
 
 	[ObservableProperty]
 	private ObservableCollection<CategorySummary> categorySummaries = new();
@@ -195,7 +197,26 @@ public partial class ChartsViewModel : ObservableObject
 			}
 		}
 
-		ChartData = new ObservableCollection<ChartDataPoint>(dataPoints);
+		// Convert to Microcharts entries
+		var entries = dataPoints.Select(d => new ChartEntry((float)d.Amount)
+		{
+			Label = d.Label,
+			ValueLabel = $"€{d.Amount:F0}",
+			Color = SKColor.Parse("#5B9BED"),
+			ValueLabelColor = SKColor.Parse("#FFFFFF")
+		}).ToArray();
+
+		// Create bar chart
+		BarChart = new BarChart
+		{
+			Entries = entries,
+			LabelTextSize = 32,
+			ValueLabelTextSize = 28,
+			BackgroundColor = SKColors.White,
+			LabelOrientation = Orientation.Horizontal,
+			ValueLabelOrientation = Orientation.Horizontal,
+			Margin = 20
+		};
 	}
 
 	private void LoadCategorySummaries()

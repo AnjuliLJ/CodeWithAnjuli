@@ -4,8 +4,7 @@ using FinanceBuddy.Charts;
 using FinanceBuddy.Settings;
 using FinanceBuddy.Categories;
 using FinanceBuddy.Services;
-using FinanceBuddy.Controls;
-using Syncfusion.Maui.Core.Hosting;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace FinanceBuddy;
 
@@ -17,14 +16,13 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureSyncfusionCore()
+			.UseSkiaSharp()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("MaterialSymbolsOutlined.ttf", "MaterialSymbolsOutlined");
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-
 		// Register Services
 		builder.Services.AddSingleton<ExpenseService>();
 
