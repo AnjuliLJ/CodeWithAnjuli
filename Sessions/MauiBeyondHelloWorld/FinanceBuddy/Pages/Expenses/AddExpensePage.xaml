@@ -6,7 +6,6 @@
              xmlns:models="clr-namespace:FinanceBuddy.Models"
              x:DataType="viewmodel:AddExpenseViewModel"
              Title="Add Expense"
-             Shell.PresentationMode="ModalAnimated"
              BackgroundColor="#F5F5F5">
     
     <ScrollView>
