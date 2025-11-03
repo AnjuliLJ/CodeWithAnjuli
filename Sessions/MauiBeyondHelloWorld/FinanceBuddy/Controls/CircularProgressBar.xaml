@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceBuddy.Controls.CircularProgressBar"
+             xmlns:drawables="clr-namespace:FinanceBuddy.Drawable"
+             Title="CircularProgressBar">
+    
+        <GraphicsView>
+        <GraphicsView.Drawable>
+            <drawables:CircularProgressBarDrawable x:DataType="drawables:CircularProgressBarDrawable"
+                Progress="{Binding Progress}"
+                Size="{Binding Size}"
+                TextColor="{Binding TextColor}"
+                Thickness="{Binding Thickness}"
+                ProgressColor="{Binding ProgressColor}"
+                ProgressLeftColor="{Binding ProgressLeftColor}"/>
+        </GraphicsView.Drawable>
+    </GraphicsView>
+    
+</ContentPage>

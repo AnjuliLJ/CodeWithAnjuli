@@ -4,16 +4,19 @@
              xmlns:local="clr-namespace:FinanceBuddy.Categories"
              x:Class="FinanceBuddy.Categories.CategoriesPage"
              x:DataType="local:CategoriesViewModel"
+            xmlns:controls="clr-namespace:FinanceBuddy.Controls"
              Title="Categories"
              BackgroundColor="#F5F5F5">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
-            <Label Text="Manage your expense categories"
-                   FontSize="18"
-                   TextColor="#666666"
-                   HorizontalOptions="Center"
-                   Margin="0,20,0,0" />
+          <controls:CircularProgressBar
+            Progress="40"
+            ProgressColor="Green"
+            ProgressLeftColor="LightGreen"
+            Size="140"
+            TextColor="DarkGreen"
+            Thickness="4" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

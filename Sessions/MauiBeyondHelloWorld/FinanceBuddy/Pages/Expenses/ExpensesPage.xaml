@@ -76,7 +76,7 @@
                                         Offset="0,1"/>
                             </Border.Shadow>
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExpensesViewModel}}, Path=ViewExpenseDetailsCommand}"
+                                <TapGestureRecognizer x:DataType="viewmodel:ExpensesViewModel" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExpensesViewModel}}, Path=ViewExpenseDetailsCommand}"
                                                       CommandParameter="{Binding .}"/>
                             </Border.GestureRecognizers>
 

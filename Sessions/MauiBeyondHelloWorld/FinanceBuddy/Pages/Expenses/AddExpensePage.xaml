@@ -174,11 +174,12 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
-                            <Picker ItemsSource="{Binding Categories}"
-                                    SelectedItem="{Binding SelectedCategory}"
-                                    ItemDisplayBinding="{Binding Name}"
-                                    TextColor="#1C1B1F"
-                                    BackgroundColor="Transparent" />
+                            <Picker x:DataType="models:Category"
+                                ItemsSource="{Binding Categories}"
+                                SelectedItem="{Binding SelectedCategory}"
+                                ItemDisplayBinding="{Binding Name}"
+                                TextColor="#1C1B1F"
+                                BackgroundColor="Transparent" />
                         </Border>
                     </VerticalStackLayout>
                     

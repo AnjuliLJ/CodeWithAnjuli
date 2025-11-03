@@ -23,10 +23,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-		// Register Services
+		
 		builder.Services.AddSingleton<ExpenseService>();
 
-		// Register ViewModels
+		// ViewModels
 		builder.Services.AddTransient<ExpensesViewModel>();
 		builder.Services.AddTransient<ExpenseDetailsViewModel>();
 		builder.Services.AddTransient<AddExpenseViewModel>();
@@ -34,7 +34,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SettingsViewModel>();
 		builder.Services.AddTransient<CategoriesViewModel>();
 
-		// Register Pages
+		// Pages
 		builder.Services.AddTransient<ExpensesPage>();
 		builder.Services.AddTransient<ExpenseDetailsPage>();
 		builder.Services.AddTransient<AddExpensePage>();
