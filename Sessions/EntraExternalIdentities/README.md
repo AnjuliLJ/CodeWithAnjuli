@@ -1,6 +1,18 @@
 # Entra External Identities Example
 In this project you will find a .NET MAUI app that connects to Microsoft Entra ID to aquire a token. With this token the app can make requests to the API.
 
+## Steps
+
+### BlazorMovie project
+In the .NET Blazor project you have to install the Microsoft.Identity.Web NuGet package. After that you should enable authentication in your Program.cs file.
+``` c#
+builder.Services.AddMsalAuthentication(options =>
+{
+    builder.Configuration.Bind("EntraID", options.ProviderOptions.Authentication);
+});
+```
+
+
 ## Setup
 In the constructor of the PublicClientSingleton class (line 52) you'll have to change this line of code to your projects name:
 ``` c#

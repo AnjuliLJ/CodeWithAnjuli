@@ -9,9 +9,11 @@
              Title="Expenses"
              BackgroundColor="#F5F5F5">
 
+    
+
     <Grid>
         <!-- Main Content Grid -->
-        <Grid RowDefinitions="Auto,*"
+        <Grid RowDefinitions="*, 3*"
                 Padding="16">
 
             <!-- Month/Total Summary Card -->

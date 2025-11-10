@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CustomControls.CircularProgressBar.CircularProgressBar"
+             xmlns:local="clr-namespace:CustomControls.CircularProgressBar"
+             x:Name="this"
+             x:DataType="local:CircularProgressBar">
+    
+    <Grid BindingContext="{x:Reference this}">
+        <!-- Background Circle -->
+        <Ellipse 
+            Fill="Transparent"
+            Stroke="{Binding ProgressLeftColor}"
+            StrokeThickness="{Binding Thickness}"
+            WidthRequest="{Binding Size}"
+            HeightRequest="{Binding Size}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+        
+        <!-- Progress Arc using GraphicsView -->
+        <GraphicsView 
+            x:Name="progressGraphics"
+            WidthRequest="{Binding Size}"
+            HeightRequest="{Binding Size}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+        
+        <!-- Percentage Text -->
+        <Label 
+            x:Name="percentageLabel"
+            Text="{Binding Progress, StringFormat='{0}%'}"
+            TextColor="{Binding TextColor}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center" />
+    </Grid>
+    
+</ContentView>

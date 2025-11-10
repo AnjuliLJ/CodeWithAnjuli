@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FinanceBuddy.Categories"
+             xmlns:controls="clr-namespace:CustomControls.CircularProgressBar;assembly=CustomControls"
              x:Class="FinanceBuddy.Categories.CategoriesPage"
              x:DataType="local:CategoriesViewModel"
-            xmlns:controls="clr-namespace:FinanceBuddy.Controls"
              Title="Categories"
              BackgroundColor="#F5F5F5">
 
@@ -12,11 +12,11 @@
         <VerticalStackLayout Padding="20" Spacing="16">
           <controls:CircularProgressBar
             Progress="40"
-            ProgressColor="Green"
-            ProgressLeftColor="LightGreen"
+            ProgressColor="#6750A4"
+            ProgressLeftColor="LightGray"
             Size="140"
-            TextColor="DarkGreen"
-            Thickness="4" />
+            TextColor="#6750A4"
+            Thickness="10" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

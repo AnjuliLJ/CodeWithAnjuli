@@ -21,9 +21,11 @@ public partial class App : Application
 	{
 		base.OnResume();
 	}
-	
+
 	protected override void OnSleep()
 	{
 		base.OnSleep();
 	}
+	
+	
 }

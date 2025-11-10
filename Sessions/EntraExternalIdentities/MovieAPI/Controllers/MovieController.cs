@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web.Resource;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MovieAPI.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
         [HttpGet]
-        [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "EntraID:Scopes:Read")]
+        // [RequiredScopeOrAppPermission(RequiredScopesConfigurationKey = "EntraID:Scopes:Read")]
         public string Get()
         {
             var random = new Random();

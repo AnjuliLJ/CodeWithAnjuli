@@ -6,6 +6,8 @@ public partial class CategoriesPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+
+		
 	}
 
 }

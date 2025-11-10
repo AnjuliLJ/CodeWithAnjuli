@@ -10,8 +10,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 
 builder.Services.AddMsalAuthentication(options =>
 {
-    builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("api://fe7c8bba-8877-4a1c-b6e8-81aef2d4fcc2/Movie.Read");
+    builder.Configuration.Bind("EntraID", options.ProviderOptions.Authentication);
+    // options.ProviderOptions.DefaultAccessTokenScopes.Add("api://fe7c8bba-8877-4a1c-b6e8-81aef2d4fcc2/Movie.Read");
 });
 
 await builder.Build().RunAsync();

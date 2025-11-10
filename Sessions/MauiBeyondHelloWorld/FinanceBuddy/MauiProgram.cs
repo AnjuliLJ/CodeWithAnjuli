@@ -24,7 +24,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 		
-		builder.Services.AddSingleton<ExpenseService>();
+		builder.Services.AddTransient<ExpenseService>();
 
 		// ViewModels
 		builder.Services.AddTransient<ExpensesViewModel>();
@@ -41,6 +41,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<ChartsPage>();
 		builder.Services.AddTransient<SettingsPage>();
 		builder.Services.AddTransient<CategoriesPage>();
+
 
 #if DEBUG
 		builder.Logging.AddDebug();

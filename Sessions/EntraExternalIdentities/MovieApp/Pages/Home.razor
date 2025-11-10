@@ -1,0 +1,59 @@
+﻿@page "/"
+@using System.Net.Http.Headers
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject IAccessTokenProvider AuthorizationService
+@inject HttpClient Http
+
+<PageTitle>Home</PageTitle>
+
+<h1>Best Movie or Show</h1>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <p>Login to see the best movie or show!</p>
+    </NotAuthorized>
+    <Authorized>
+        <p>Best movie is:</p>
+        <h3>@name</h3>
+        <button @onclick="GetName">Get Name</button>
+    </Authorized>
+</AuthorizeView>
+
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    string name = "?";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Http.DefaultRequestHeaders.Add("Access-Control-Allow-Origin", "*");
+    }
+
+    private async Task GetName()
+    {
+        name = "Loading...";
+        var token = await GetToken();
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await Http.GetAsync("Movie");
+
+        name = await response.Content.ReadAsStringAsync();
+    }
+
+    private async Task<string> GetToken()
+    {
+        var state = await AuthenticationState;
+        var accessTokenResult = await AuthorizationService.RequestAccessToken();
+
+        if (!accessTokenResult.TryGetToken(out var token))
+        {
+            throw new InvalidOperationException(
+                "Failed to provision the access token.");
+        }
+        return token.Value;
+    }
+
+}
