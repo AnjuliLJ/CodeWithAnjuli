@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiBeyondHelloWorld.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiBeyondHelloWorld"
+    xmlns:views="clr-namespace:MauiBeyondHelloWorld.Views"
+    Title="MauiBeyondHelloWorld">
+
+
+
+    <TabBar>
+            <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+        <ShellContent
+        Title="Custom Page"
+        ContentTemplate="{DataTemplate views:CustomPage}"
+        Route="CustomPage" />
+        <ShellContent
+        Title="Safe Area Page"
+        ContentTemplate="{DataTemplate views:SafeAreaPage}"
+        Route="SafeAreaPage" />
+    </TabBar>
+
+</Shell>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MauiBeyondHelloWorld.Views.Layouts"
+             x:Class="MauiBeyondHelloWorld.Views.Layouts.AbsoluteLayoutPage"
+             x:DataType="viewModels:AbsoluteLayoutViewModel"
+             Shell.PresentationMode="Modal"
+             Title="AbsoluteLayoutPage"
+             BackgroundColor="#E0E0E0"
+             Opacity="0.5">
+    
+    <AbsoluteLayout>
+
+        <BoxView Color="BlueViolet"
+                 AbsoluteLayout.LayoutBounds="0.5, 0.5, 300, 300"
+                 AbsoluteLayout.LayoutFlags="PositionProportional" />
+        
+        <!-- Centered Label -->
+        <Label Text="This is an AbsoluteLayout"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="White"
+               AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+        
+        <!-- Bottom-right Go Back Button -->
+        <Button Text="Go Back"
+                Command="{Binding GoBackCommand}"
+                Margin="0,0,20,20"
+                AbsoluteLayout.LayoutBounds="1, 1, AutoSize, AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional" />
+    </AbsoluteLayout>
+</ContentPage>
